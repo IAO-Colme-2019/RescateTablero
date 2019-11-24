@@ -1,0 +1,504 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-BtreeDict<RescateTablero>",
+            "request": "launch",
+            "mainClass": "com.sun.java.help.search.BtreeDict",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-BtreeDictCompactor<RescateTablero>",
+            "request": "launch",
+            "mainClass": "com.sun.java.help.search.BtreeDictCompactor",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ConceptLocation<RescateTablero>",
+            "request": "launch",
+            "mainClass": "com.sun.java.help.search.ConceptLocation",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-DocumentLists<RescateTablero>",
+            "request": "launch",
+            "mainClass": "com.sun.java.help.search.DocumentLists",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-FullBtreeDict<RescateTablero>",
+            "request": "launch",
+            "mainClass": "com.sun.java.help.search.FullBtreeDict",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Indexer<RescateTablero>",
+            "request": "launch",
+            "mainClass": "com.sun.java.help.search.Indexer",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-QueryEngine<RescateTablero>",
+            "request": "launch",
+            "mainClass": "com.sun.java.help.search.QueryEngine",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Schema<RescateTablero>",
+            "request": "launch",
+            "mainClass": "com.sun.java.help.search.Schema",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-StreamDecompressor<RescateTablero>",
+            "request": "launch",
+            "mainClass": "com.sun.java.help.search.StreamDecompressor",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-GLPanel<RescateTablero>",
+            "request": "launch",
+            "mainClass": "com.touchgraph.graphlayout.GLPanel",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-TGPanel<RescateTablero>",
+            "request": "launch",
+            "mainClass": "com.touchgraph.graphlayout.TGPanel",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Platform<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.adapter.standalone.Platform",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-GUIImageLoader<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.examples.blackjack.gui.GUIImageLoader",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-CreaturePanel<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.examples.hunterprey.environment.CreaturePanel",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-MapPanel<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.examples.hunterprey.environment.MapPanel",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Board<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.examples.puzzle.Board",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-BoardPanel<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.examples.puzzle.BoardPanel",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-BatchProcessor<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.model.BatchProcessor",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-JadexTest<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.model.jibximpl.JadexTest",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-SParser<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.parser.SParser",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ExponentialPriceCalculator<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.planlib.ExponentialPriceCalculator",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-LinearPriceCalculator<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.planlib.LinearPriceCalculator",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-BindingHelper<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.runtime.impl.BindingHelper",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-CheckModel<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.tools.CheckModel",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-AboutDialog<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.tools.common.AboutDialog",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ConfigurationDialog<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.tools.common.ConfigurationDialog",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ConsolePanel<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.tools.common.ConsolePanel",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ElementHTMLGenerator<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.tools.common.ElementHTMLGenerator",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ElementPanel<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.tools.common.ElementPanel",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-JTreeDialog<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.tools.common.JTreeDialog",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-StatusBar<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.tools.common.StatusBar",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-SwingWorker<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.tools.common.SwingWorker",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-FipaMessageGui<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.tools.convcenter.FipaMessageGui",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ClassicDebuggerPanel<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.tools.introspector.debugger.ClassicDebuggerPanel",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-JadexdocPanel<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.tools.jadexdoc.JadexdocPanel",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Main<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.tools.jadexdoc.Main",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Test<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.tools.jadexdoc.Test",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-StarterPanel<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.tools.starter.StarterPanel",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-TestCenterPanel<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.tools.testcenter.TestCenterPanel",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ExpressionTokenizer<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.util.ExpressionTokenizer",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-BlockingQueue<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.util.collection.BlockingQueue",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-SCollection<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.util.collection.SCollection",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-WeakList<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.util.collection.WeakList",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-MultiThreadTest<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.util.concurrent.MultiThreadTest",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ThreadPool<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.util.concurrent.ThreadPool",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ThreadTest<RescateTablero>",
+            "request": "launch",
+            "mainClass": "jadex.util.concurrent.ThreadTest",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-BCELifier<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.apache.bcel.util.BCELifier",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Class2HTML<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.apache.bcel.util.Class2HTML",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-JavaWrapper<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.apache.bcel.util.JavaWrapper",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-GraphicalVerifier<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.apache.bcel.verifier.GraphicalVerifier",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-NativeVerifier<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.apache.bcel.verifier.NativeVerifier",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-TransitiveHull<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.apache.bcel.verifier.TransitiveHull",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Verifier<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.apache.bcel.verifier.Verifier",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-VerifyDialog<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.apache.bcel.verifier.VerifyDialog",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-AssertionViolatedException<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.apache.bcel.verifier.exc.AssertionViolatedException",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Compiler<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.codehaus.janino.Compiler",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-JavaSourceClassLoader<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.codehaus.janino.JavaSourceClassLoader",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-SimpleCompiler<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.codehaus.janino.SimpleCompiler",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-UnicodeUnescapeReader<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.codehaus.janino.UnicodeUnescapeReader",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-UnparseVisitor<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.codehaus.janino.UnparseVisitor",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ClassBodyDemo<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.codehaus.janino.samples.ClassBodyDemo",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-DeclarationCounter<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.codehaus.janino.samples.DeclarationCounter",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ExpressionDemo<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.codehaus.janino.samples.ExpressionDemo",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ScriptDemo<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.codehaus.janino.samples.ScriptDemo",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ShippingCost<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.codehaus.janino.samples.ShippingCost",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Disassembler<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.codehaus.janino.tools.Disassembler",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-HprofScrubber<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.codehaus.janino.tools.HprofScrubber",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-JGrep<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.codehaus.janino.tools.JGrep",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-TestMultRoundtrip<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.jibx.extras.TestMultRoundtrip",
+            "projectName": "RescateTablero"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-TestRoundtrip<RescateTablero>",
+            "request": "launch",
+            "mainClass": "org.jibx.extras.TestRoundtrip",
+            "projectName": "RescateTablero"
+        }
+    ]
+}

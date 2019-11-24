@@ -15,7 +15,7 @@ public class Tablero extends Concepto {
     private int salvados;
     private int victimas;
 
-    private int cubosDaño;
+    private int cubosDano;
     private int focosCalor;
     private int puntoInteres;
     private int primerosAuxilios;
@@ -47,12 +47,12 @@ public class Tablero extends Concepto {
         this.victimas = victimas;
     }
 
-    public int getCubosDaño() {
-        return cubosDaño;
+    public int getCubosDano() {
+        return cubosDano;
     }
 
-    public void setCubosDaño(int cubosDaño) {
-        this.cubosDaño = cubosDaño;
+    public void setCubosDano(int cubosDano) {
+        this.cubosDano = cubosDano;
     }
 
     public int getFocosCalor() {
