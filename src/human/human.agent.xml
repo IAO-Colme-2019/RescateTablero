@@ -1,0 +1,141 @@
+<!--
+	<H3>Agente Humano. Traeme cerveza. Ejemplo de Jadex </H3>
+	<font face="Arial, Helvetica, sans-serif">
+Developped by:
+Javier Carbo 
+Computer Science Dept
+Univ. Carlos III de Madrid (Spain)
+2018
+</font>
+-->
+<agent 
+	xmlns="http://jadex.sourceforge.net/jadex"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jadex.sourceforge.net/jadex 
+	                    http://jadex.sourceforge.net/jadex-0.96.xsd"
+	name="human"
+	package="human">
+
+	<imports>
+		<import>jadex.runtime.*</import>
+		<import>jadex.planlib.*</import>
+		<import>jadex.util.*</import>
+		<import>jadex.adapter.fipa.*</import>
+		<import>java.util.logging.*</import>
+		<import>java.util.*</import>
+		<import>human.plans.*</import>
+	</imports>
+
+	<capabilities>
+		<capability name="dfcap" file="jadex.planlib.DF"/>
+	</capabilities>
+
+	<beliefs>
+		<belief name="havebeer" class="boolean">
+		<fact>true</fact></belief>
+		<belief name="waitingbeer" class="boolean"/>
+		<belief name="drinkingtime" class="int"/>
+		<belief name="newbeertime" class="int"/>
+		<belief name="currenttime" class="int" updaterate="750">
+			<fact> (int)(System.currentTimeMillis()/1000) </fact>
+		</belief>		
+	</beliefs>
+	<goals>
+			<achievegoalref name="df_register">
+			<concrete ref="dfcap.df_register"/>
+		</achievegoalref>
+
+		<achievegoalref name="df_search">
+			<concrete ref="dfcap.df_search"/>
+		</achievegoalref>
+		<performgoal name="get_beer" recur="true" recurdelay="3000" >  
+			<contextcondition>
+				 ($beliefbase.havebeer) &amp;&amp; 
+				 (($beliefbase.newbeertime + $beliefbase.drinkingtime ) &lt; ($beliefbase.currenttime ))   
+			</contextcondition>
+		</performgoal> 
+	</goals>
+	
+	<plans>
+		<plan name="request_beer">
+			<body class="RequestBeerPlan" />
+			<trigger> <goal ref="get_beer"/> </trigger>
+		</plan>
+		
+
+	</plans>
+	<events>	
+	
+		<messageevent name="inform_beerdelivered" direction="receive" type="fipa">
+			<parameter name="performative" class="String" direction="fixed">
+				<value>SFipa.INFORM</value>
+			</parameter>
+		</messageevent>
+		<messageevent name="failure_beerdelivered" direction="receive" type="fipa">
+			<parameter name="performative" class="String" direction="fixed">
+				<value>SFipa.FAILURE</value>
+			</parameter>
+		</messageevent>
+		<messageevent name="refuse_bebercerveza" direction="receive" type="fipa">
+			<parameter name="performative" class="String" direction="fixed">
+				<value>SFipa.REFUSE</value>
+			</parameter>
+		</messageevent>
+		<messageevent name="agree_bebercerveza" direction="receive" type="fipa">
+			<parameter name="performative" class="String" direction="fixed">
+				<value>SFipa.AGREE</value>
+			</parameter>
+		</messageevent>
+		<messageevent name="RequestBeberCervezaMsg" direction="send" type="fipa">
+			<parameter name="performative" class="String" direction="fixed">
+				<value>SFipa.REQUEST</value>
+			</parameter>
+			<parameter name="language" class="String" direction="fixed">
+				<value>SFipa.NUGGETS_XML</value>
+			</parameter>
+		</messageevent>
+
+	</events>	
+	<configurations>
+		<configuration name="conductor">
+			<beliefs>
+	<!--		<initialbelief ref="havebeer">
+				<fact>true</fact>
+			</initialbelief>
+	-->		<initialbelief ref="drinkingtime">
+				<fact>1</fact>
+			</initialbelief>
+			<initialbelief ref="newbeertime">
+			<fact>0</fact>
+			</initialbelief>
+	</beliefs>
+			<goals><initialgoal ref="get_beer">
+			</initialgoal>
+			<initialgoal ref="df_register">
+				<parameter ref="description"> <value> 
+					SFipa.createAgentDescription(null,SFipa.createServiceDescription(null,"conductor", null))</value></parameter>
+			</initialgoal>
+			
+			</goals>
+		</configuration>
+		<configuration name="noconductor">
+			<beliefs>
+			<initialbelief ref="waitingbeer">
+				<fact>false</fact>
+			</initialbelief>
+			<initialbelief ref="drinkingtime">
+				<fact>1</fact>
+			</initialbelief>
+			<initialbelief ref="newbeertime">
+			<fact>0</fact>
+			</initialbelief>
+	</beliefs>
+			<goals><initialgoal ref="get_beer">
+			</initialgoal>
+			
+			</goals>
+		</configuration>
+	</configurations>
+	
+</agent>
+

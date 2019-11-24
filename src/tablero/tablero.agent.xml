@@ -1,0 +1,167 @@
+<agent xmlns="http://jadex.sourceforge.net/jadex"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jadex.sourceforge.net/jadexhttp://jadex.sourceforge.net/jadex-0.96.xsd"
+	name="tablero" package="tablero">
+	<imports>
+		<import>jadex.runtime.*</import>
+		<import>jadex.planlib.*</import>
+		<import>jadex.adapter.fipa.*</import>
+		<import>java.util.logging.*</import>
+		<import>java.util.*</import>
+		<import>jadex.util.*</import>
+		<import>tablero.planes.*</import>
+	    <import>ontologia.acciones.*</import>
+	    <import>ontologia.conceptos.*</import>
+	    <import>ontologia.predicados.*</import>
+	</imports>
+
+	<capabilities>
+		<capability name="dfcap" file="jadex.planlib.DF" />
+	</capabilities>
+
+	<!-- Creencias -->
+	<beliefs>
+
+		<!--belief name="jugadores" class="Lista_Jugadores">
+			<fact>new Lista_Jugadores()</fact>
+		</belief-->
+
+		<!-- A quien le toca actuar -->
+		<belief name="turno" class="int">
+			<fact>0</fact>
+		</belief>
+
+		<!-- Mapa de juego -->
+		<belief name="mapa" class="Tablero">
+			<fact>new Tablero()</fact>
+		</belief>
+
+		<!-- Fichas de dano disponibles -->
+		<belief name="fichasDano" class="int">
+			<fact>24</fact>
+		</belief>
+
+		<!-- Puntos de interes disponibles -->
+		<belief name="pdi" class="int">
+			<fact>18</fact>
+		</belief>
+
+		<!-- PDI personas disponibles -->
+		<belief name="fichasPersona" class="int">
+			<fact>12</fact>
+		</belief>
+
+		<!-- FPDI falsas alarmas disponibles -->
+		<belief name="fichasFalsaAlarma" class="int">
+			<fact>6</fact>
+		</belief>
+
+		<!-- Puntos de accion disponibles -->
+		<belief name="puntosAccion" class="int">
+			<fact>21</fact>
+		</belief>
+
+		<!-- Primeros auxilios disponibles -->
+		<belief name="fichasAuxilio" class="int">
+			<fact>3</fact>
+		</belief>
+
+		<!-- Fichas fuego/humo disponibles -->
+		<belief name="fichasFuegoHumo" class="int">
+			<fact>35</fact>
+		</belief>
+
+		<!-- Materias peligrosas disponibles -->
+		<belief name="fichasMateriasPeligrosas" class="int">
+			<fact>6</fact>
+		</belief>
+
+		<!-- Focos de calor disponibles -->
+		<belief name="fichasFoco" class="int">
+			<fact>24</fact>
+		</belief>
+
+		<!-- Personas salvadas -->
+		<belief name="salvados" class="int">
+			<fact>0</fact>
+		</belief>
+
+		<!-- Personas no salvadas -->
+		<belief name="victimas" class="int">
+			<fact>0</fact>
+		</belief>
+
+		<!-- Fin de Partida -->
+		<belief name="FinPartida" class="boolean">
+			<fact>false</fact>
+		</belief>
+
+		<!-- Camion de bomberos? -->
+
+		<!-- Ambulancia? -->
+
+	</beliefs>
+
+	<!-- Metas -->
+	<goals>
+
+		<achievegoalref name="df_register">
+			<concrete ref="dfcap.df_register"/>
+		</achievegoalref>
+
+	</goals>
+
+	<!-- Planes -->
+	<plans>
+
+		<!-- Registrar a un jugador -->
+		<plan name="unir_jugador_plan">
+			<body class="PlanUnirJugador"/>
+			<trigger>
+				<messageevent ref="RequestUnirsePartidaMsg"/>
+			</trigger>
+		</plan>
+
+	</plans>
+
+	<!-- Eventos -->
+	<events>
+		<messageevent name="RequestUnirsePartidaMsg" direction="receive" type="fipa">
+			<parameter name="performative" class="String" direction="fixed">
+				<value>SFipa.REQUEST</value>
+			</parameter>
+			<parameter name="language" class="String" direction="fixed">
+				<value>SFipa.NUGGETS_XML</value> 
+ 			</parameter>
+			<parameter name="conversation-id" class="String">
+				<value>SFipa.createUniqueId($scope.getAgentName())</value>
+			</parameter>
+			<parameter name="content-class" class="Class" direction="fixed">
+				<value>Unirse_Partida.class</value>
+			</parameter>
+		</messageevent>
+
+		
+
+	</events>
+
+	<!-- Propiedades -->
+	<properties>
+
+	</properties>
+
+	<!-- Configuracion -->
+	<configurations>
+		<configuration name="default">
+			<goals>
+				<initialgoal ref="df_register">
+					<parameter ref="description">
+						<value>
+							SFipa.createAgentDescription(null, SFipa.createServiceDescription("tablero", "agente", "Rescate"))
+						</value>
+					</parameter>
+				</initialgoal>
+			</goals>
+		</configuration>
+	</configurations>
+</agent>
