@@ -10,7 +10,7 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class ApagarFuegoPlan extends Plan {
+public class ApagarFuegoPlan extends Plan {
 
   @Override
   public void body() {

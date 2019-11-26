@@ -8,7 +8,7 @@ import jadex.runtime.Plan;
 
 import rescate.ontologia.*;
 
-class AsignarRolPlan extends Plan {
+public class AsignarRolPlan extends Plan {
 
   @Override
   public void body() {

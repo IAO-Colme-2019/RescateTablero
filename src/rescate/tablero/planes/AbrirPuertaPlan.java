@@ -11,7 +11,7 @@ import rescate.ontologia.conceptos.Casilla;
 
 import rescate.ontologia.conceptos.Casilla.Conexion;
 
-class AbrirPuertaPlan extends Plan {
+public class AbrirPuertaPlan extends Plan {
 
 	@Override
 	public void body() {

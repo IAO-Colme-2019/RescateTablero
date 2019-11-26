@@ -8,7 +8,7 @@ import jadex.runtime.Plan;
 
 import rescate.ontologia.*;
 
-class AtenderPlan extends Plan {
+public class AtenderPlan extends Plan {
 
   @Override
   public void body() {

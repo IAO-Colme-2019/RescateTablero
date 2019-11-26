@@ -8,7 +8,7 @@ import jadex.runtime.Plan;
 
 import rescate.ontologia.*;
 
-class UsarCanonDeAguaPlan extends Plan {
+public class UsarCanonDeAguaPlan extends Plan {
 
   @Override
   public void body() {

@@ -8,7 +8,7 @@ import jadex.runtime.Plan;
 
 import rescate.ontologia.*;
 
-class DesplazarAmbulanciaPlan extends Plan {
+public class DesplazarAmbulanciaPlan extends Plan {
 
   @Override
   public void body() {

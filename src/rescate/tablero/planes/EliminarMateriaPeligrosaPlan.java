@@ -8,7 +8,7 @@ import jadex.runtime.Plan;
 
 import rescate.ontologia.*;
 
-class EliminarMateriaPeligrosaPlan extends Plan {
+public class EliminarMateriaPeligrosaPlan extends Plan {
 
   @Override
   public void body() {

@@ -155,7 +155,7 @@
 
     <!-- Registrar a un jugador -->
     <plan name="unirJugador_plan">
-      <body class="TableroUnirJugadorPlan" />
+      <body class="UnirJugadorPlan" /> 
       <trigger>
         <messageevent ref="Request_Unirse_a_la_partida" />
       </trigger>

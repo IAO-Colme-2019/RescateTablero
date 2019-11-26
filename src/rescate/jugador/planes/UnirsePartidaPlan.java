@@ -48,7 +48,7 @@ public class UnirsePartidaPlan extends Plan {
       UnirsePartidaAccion accion = new UnirsePartidaAccion();
       accion.setJugador(jugador);
 
-      IMessageEvent msgsend = createMessageEvent("RequestUnirsePartidaMsg");
+      IMessageEvent msgsend = createMessageEvent("Request_Unirse_a_la_partida");
       msgsend.setContent(accion);
       msgsend.getParameterSet(SFipa.RECEIVERS).addValue(tablero);
 

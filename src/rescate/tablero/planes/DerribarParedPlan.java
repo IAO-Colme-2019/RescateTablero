@@ -8,7 +8,7 @@ import jadex.runtime.Plan;
 
 import rescate.ontologia.*;
 
-class DerribarParedPlan extends Plan {
+public class DerribarParedPlan extends Plan {
 
   @Override
   public void body() {

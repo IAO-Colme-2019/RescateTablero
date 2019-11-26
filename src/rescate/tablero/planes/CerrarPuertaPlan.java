@@ -7,7 +7,7 @@ import jadex.runtime.Plan;
 import rescate.ontologia.*;
 import rescate.ontologia.conceptos.Casilla;
 import rescate.ontologia.conceptos.Casilla.Conexion;
-class CerrarPuertaPlan extends Plan {
+public class CerrarPuertaPlan extends Plan {
 
 	@Override
 	public void body() {

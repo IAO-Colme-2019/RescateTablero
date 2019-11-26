@@ -36,7 +36,7 @@
       <concrete ref="dfcap.df_register" />
     </achievegoalref>
 
-    <achievegoal name="unirsePartida"></achievegoal>
+    <achievegoal name="UnirsePartida"></achievegoal>
 
     <achievegoalref name="df_search">
       <concrete ref="dfcap.df_search" />
@@ -45,10 +45,10 @@
   </goals>
 
   <plans>
-    <plan name="UnirsePartida">
+    <plan name="PlanUnirsePartida">
       <body class="UnirsePartidaPlan" />
       <trigger>
-        <goal ref="unirsePartida" />
+        <goal ref="UnirsePartida" />
       </trigger>
     </plan>
 
@@ -56,7 +56,7 @@
 
   <events>
 
-    <messageevent name="RequestUnirsePartidaMsg" direction="send" type="fipa">
+    <messageevent name="Request_Unirse_a_la_partida" direction="send" type="fipa">
       <parameter name="performative" class="String" direction="fixed">
         <value>SFipa.REQUEST</value>
       </parameter>
@@ -64,7 +64,7 @@
         <value>SFipa.NUGGETS_XML</value>
       </parameter>
       <parameter name="content-class" class="Class" direction="fixed">
-        <value>Unirse_Partida.class</value>
+        <value>UnirsePartidaAccion.class</value>
       </parameter>
     </messageevent>
 
@@ -105,7 +105,7 @@
                         </value>
           </parameter>
         </initialgoal>
-        <initialgoal ref="unirsePartida"></initialgoal>
+        <initialgoal ref="UnirsePartida"></initialgoal>
       </goals>
 
     </configuration>
