@@ -2,12 +2,12 @@ package rescate.ontologia.acciones;
 
 import rescate.ontologia.conceptos.Casilla;
 
-public class DerribarPared extends Accion {
+public class DerribarParedAccion extends Accion {
 
   private Casilla casilla;
   private int conexion;
 
-  public DerribarPared() {
+  public DerribarParedAccion() {
   }
 
   public Casilla getCasilla() {

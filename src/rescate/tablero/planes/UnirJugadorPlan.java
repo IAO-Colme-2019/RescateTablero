@@ -1,46 +1,64 @@
 package rescate.tablero.planes;
 
 import java.util.*;
-
 import jadex.adapter.fipa.*;
 import jadex.runtime.IMessageEvent;
 import jadex.runtime.Plan;
 
 import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
+import rescate.ontologia.predicados.JugadorUnidoPredicado;
 
 public class UnirJugadorPlan extends Plan {
 
   public void body(){
         IMessageEvent request = (IMessageEvent)getInitialEvent();
-
+        JugadorUnidoPredicado jugadorUnido = new JugadorUnidoPredicado();
         System.out.println("Mensaje de request recibido");
 
         Tablero tablero = (Tablero) getBeliefbase().getBelief("tablero").getFact();
         UnirsePartidaAccion rj = (UnirsePartidaAccion) request.getContent();
-        Jugador player = new Jugador();
-        player.setIdAgente((AgentIdentifier) request.getParameter("sender").getValue());
-        System.out.println("Nuevo Jugador creado: "+player);
+        boolean existe = false; 
+        //player.setIdAgente((AgentIdentifier) request.getParameter("sender").getValue());
         
-        /*Unirse_Partida rj3 = new Unirse_Partida();
-		    rj3.setJugador(player);
-        sendMessage(request.createReply("Agree_unirse_a_partida", rj3));*/
+        AgentIdentifier jugadorId = (AgentIdentifier) request.getParameter("sender").getValue();
+        
+        if(tablero.getJugadores() != null){
 
-        /*for(int i=0; i< tablero.getJugadores().size();i++){
+          for (int i = 0; i < tablero.getJugadores().size(); i++) {
+            if (tablero.getJugadores().get(i).getIdAgente().equals(jugadorId)) {
+             existe = true;
+            }
+         }
 
-          if(tablero.getJugadores().get(i).getIdAgente().equals(player.getIdAgente())){            
-            
-            System.out.println(" Error al unir jugador a la partida, el jugador ya se encuentra en ella. ");
-            return;
-          }
-
+        }else{
+          tablero.setJugadores(new ArrayList<Jugador>());
         }
-        tablero.getJugadores().add(player);*/
+        
+        
+        IMessageEvent msg = createMessageEvent("Agree_Unirse_a_la_partida");
+        if(existe){
+            msg.setContent("Refuse_Unirse_a_la_partida");
+            System.out.println(" Error al unir jugador a la partida, el jugador ya se encuentra en ella. ");
 
-      // Se coge el numero de jugadores registrado y se aumenta en 1 unidad /
+        }else{
 
-		  System.out.println("Jugador unido a la partida.");
+            Jugador jugador = new Jugador();
+
+            jugador.setIdAgente(jugadorId);
+            tablero.getJugadores().add(jugador); 
+            
+            getBeliefbase().getBelief("tablero").setFact(tablero);
+
+            System.out.println("Tablero informa que el jugador se ha unido a la partida.");
+                    
+        }
+
+        msg.setContent(jugadorUnido);
+        msg.getParameterSet(SFipa.RECEIVERS).addValue(jugadorId);
+        sendMessage(msg);		 
     }
+
 
 }
 

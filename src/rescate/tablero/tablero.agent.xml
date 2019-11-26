@@ -352,6 +352,30 @@
         </parameter>
       </messageevent>
 
+       <messageevent name="Agree_Unirse_a_la_partida" direction="send" type="fipa">
+        <parameter name="performative" class="String" direction="fixed">
+          <value>SFipa.AGREE</value>
+        </parameter>
+        <parameter name="language" class="String" direction="fixed">
+          <value>SFipa.NUGGETS_XML</value> 
+        </parameter>
+        <parameter name="content-class" class="Class" direction="fixed">
+          <value>JugadorUnido.class</value>
+        </parameter>
+      </messageevent>
+
+       <messageevent name="Refuse_Unirse_a_la_partida" direction="send" type="fipa">
+        <parameter name="performative" class="String" direction="fixed">
+          <value>SFipa.FAILURE</value>
+        </parameter>
+        <parameter name="language" class="String" direction="fixed">
+          <value>SFipa.NUGGETS_XML</value> 
+        </parameter>
+        <parameter name="content-class" class="Class" direction="fixed">
+          <value>JugadorUnido.class</value>
+        </parameter>
+      </messageevent>
+
       <messageevent name="Request_Elegir_rol" direction="send" type="fipa">
       </messageevent>
       <messageevent name="Request_Desplazar" direction="send" type="fipa">
@@ -417,6 +441,7 @@
           <value>FuegoExtinguidoPredicado.class</value>
         </parameter>
       </messageevent>
+     
 
       <messageevent name="Refuse_Extinguir_Fuego" direction="send" type="fipa">
         <parameter name="performative" class="String" direction="fixed">
@@ -429,6 +454,8 @@
           <value>FuegoExtinguidoPredicado.class</value>
         </parameter>
       </messageevent>
+
+     
 
       <messageevent name="Request_Extinguir_humo" direction="receive" type="fipa">
         <parameter name="performative" class="String" direction="fixed">
@@ -469,8 +496,46 @@
       </messageevent>
       <messageevent name="Request_Cerrar_puerta" direction="send" type="fipa">
       </messageevent>
-      <messageevent name="Request_Derribar_pared" direction="send" type="fipa">
+
+
+      <messageevent name="Request_Derribar_pared" direction="receive" type="fipa">
+        <parameter name="performative" class="String" direction="fixed">
+            <value>SFipa.REQUEST</value>
+          </parameter>
+          <parameter name="language" class="String" direction="fixed">
+            <value>SFipa.NUGGETS_XML</value> 
+          </parameter>
+          <parameter name="content-class" class="Class" direction="fixed">
+            <value>DerribarParedAccion.class</value>
+          </parameter>
       </messageevent>
+
+       <messageevent name="Agree_Derribar_Muro" direction="send" type="fipa">
+        <parameter name="performative" class="String" direction="fixed">
+          <value>SFipa.AGREE</value>
+        </parameter>
+        <parameter name="language" class="String" direction="fixed">
+          <value>SFipa.NUGGETS_XML</value> 
+        </parameter>
+        <parameter name="content-class" class="Class" direction="fixed">
+          <value>MuroDerribadoPredicado.class</value>
+        </parameter>
+      </messageevent>
+
+       <messageevent name="Refuse_Derribar_Muro" direction="send" type="fipa">
+        <parameter name="performative" class="String" direction="fixed">
+          <value>SFipa.FAILURE</value>
+        </parameter>
+        <parameter name="language" class="String" direction="fixed">
+          <value>SFipa.NUGGETS_XML</value> 
+        </parameter>
+        <parameter name="content-class" class="Class" direction="fixed">
+          <value>MuroDerribadoPredicado.class</value>
+        </parameter>
+      </messageevent>
+
+
+
       <messageevent name="Request_Trasladar_victima" direction="send" type="fipa">
       </messageevent>
       <messageevent name="Request_Trasladar_materia_peligrosa" direction="send" type="fipa">
@@ -491,8 +556,43 @@
       </messageevent>
       <messageevent name="Request_Mando" direction="send" type="fipa">
       </messageevent>
-      <messageevent name="Request_Eliminar_materia_peligrosa" direction="send" type="fipa">
+
+      <messageevent name="Request_Eliminar_materia_peligrosa" direction="receive" type="fipa">
+        <parameter name="performative" class="String" direction="fixed">
+            <value>SFipa.REQUEST</value>
+          </parameter>
+          <parameter name="language" class="String" direction="fixed">
+            <value>SFipa.NUGGETS_XML</value> 
+          </parameter>
+          <parameter name="content-class" class="Class" direction="fixed">
+            <value>EliminarMateriaPeligrosaAccion.class</value>
+          </parameter>
       </messageevent>
+
+       <messageevent name="Agree_Eliminar_Materia" direction="send" type="fipa">
+        <parameter name="performative" class="String" direction="fixed">
+          <value>SFipa.AGREE</value>
+        </parameter>
+        <parameter name="language" class="String" direction="fixed">
+          <value>SFipa.NUGGETS_XML</value> 
+        </parameter>
+        <parameter name="content-class" class="Class" direction="fixed">
+          <value>MateriaPeligrosaEliminadaPredicado.class</value>
+        </parameter>
+      </messageevent>
+      
+      <messageevent name="Refuse_Eliminar_Materia" direction="send" type="fipa">
+        <parameter name="performative" class="String" direction="fixed">
+          <value>SFipa.FAILURE</value>
+        </parameter>
+        <parameter name="language" class="String" direction="fixed">
+          <value>SFipa.NUGGETS_XML</value> 
+        </parameter>
+        <parameter name="content-class" class="Class" direction="fixed">
+          <value>MateriaPeligrosaEliminadaPredicado.class</value>
+        </parameter>
+      </messageevent>
+
       <messageevent name="msg_TableroInicial" direction="send" type="fipa">
       </messageevent>
   </events>

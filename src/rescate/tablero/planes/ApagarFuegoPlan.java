@@ -17,7 +17,7 @@ public class ApagarFuegoPlan extends Plan {
     FuegoApagadoPredicado fa = new FuegoApagadoPredicado();
     System.out.println("tablero recibe peticion de apagar fuego...");
 		IMessageEvent request = (IMessageEvent) getInitialEvent();
-		AgentIdentifier jugadorId = (AgentIdentifier) request.getParameter("emisor").getValue();
+		AgentIdentifier jugadorId = (AgentIdentifier) request.getParameter("sender").getValue();
     Casilla casillaSolicitada = (Casilla) request.getParameter("casilla").getValue();
     Tablero tablero = (Tablero) getBeliefbase().getBelief("tablero").getFact();
     Jugador jugador = new Jugador();
