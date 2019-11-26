@@ -1,14 +1,27 @@
 package rescate.ontologia.conceptos;
 
-public class Ambulancia {
-	
-	private int[] posicion;
-	
-	public int [] getPosicion() {
-		return posicion;
+import java.util.List;
+
+public class Ambulancia extends Concepto {
+
+    private int[] posicion;
+    private List<Jugador> jugadoresEnVehiculo;
+
+    public int[] getPosicion() {
+        return posicion;
+    }
+
+	public List<Jugador> getJugadoresEnVehiculo() {
+		return jugadoresEnVehiculo;
 	}
-	public void setPosicion (int [] posicion) {
-		this.posicion=posicion;
+
+	public void setJugadoresEnVehiculo(List<Jugador> jugadoresEnVehiculo) {
+		this.jugadoresEnVehiculo = jugadoresEnVehiculo;
 	}
-	
+
+	public void setPosicion(int[] posicion) {
+        this.posicion = posicion;
+    }
+
+
 }
