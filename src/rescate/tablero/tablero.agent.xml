@@ -705,14 +705,45 @@
       </messageevent>
 
 
-      <messageevent name="Request_Conducir_Camion" direction="send" type="fipa">
-      </messageevent>
-
-
       <messageevent name="Request_Desplazar_ambulancia" direction="send" type="fipa">
       </messageevent>
-      <messageevent name="Request_Usar_canon_de_agua" direction="send" type="fipa">
+      
+      <messageevent name="Request_Usar_canon_de_agua" direction="receive" type="fipa">
+        <parameter name="performative" class="String" direction="fixed">
+          <value>SFipa.REQUEST</value>
+        </parameter>
+        <parameter name="language" class="String" direction="fixed">
+          <value>SFipa.NUGGETS_XML</value>
+        </parameter>
+        <parameter name="content-class" class="Class" direction="fixed">
+          <value>UsarCanonDeAguaAccion.class</value>
+        </parameter>
       </messageevent>
+
+      <messageevent name="Agree_Usar_Canon" direction="send" type="fipa">
+        <parameter name="performative" class="String" direction="fixed">
+          <value>SFipa.AGREE</value>
+        </parameter>
+        <parameter name="language" class="String" direction="fixed">
+          <value>SFipa.NUGGETS_XML</value>
+        </parameter>
+        <parameter name="content-class" class="Class" direction="fixed">
+          <value>CanonUsadoPredicado.class</value>
+        </parameter>
+      </messageevent>
+
+      <messageevent name="Refuse_Usar_Canon" direction="send" type="fipa">
+        <parameter name="performative" class="String" direction="fixed">
+          <value>SFipa.FAILURE</value>
+        </parameter>
+        <parameter name="language" class="String" direction="fixed">
+          <value>SFipa.NUGGETS_XML</value>
+        </parameter>
+        <parameter name="content-class" class="Class" direction="fixed">
+          <value>CanonUsadoPredicado.class</value>
+        </parameter>
+      </messageevent>
+
       <messageevent name="Request_Mando" direction="send" type="fipa">
       </messageevent>
       <messageevent name="Request_Eliminar_materia_peligrosa" direction="send" type="fipa">

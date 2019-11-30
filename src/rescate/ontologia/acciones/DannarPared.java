@@ -7,7 +7,7 @@ public class DannarPared extends Accion {
   private Casilla casilla;
   private int conexion;
 
-  public DerribarPared() {
+  public DannarPared() {
   }
 
   public Casilla getCasilla() {
