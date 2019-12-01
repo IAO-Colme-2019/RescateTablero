@@ -808,7 +808,7 @@
         <value>SFipa.NUGGETS_XML</value>
       </parameter>
       <parameter name="content-class" class="Class" direction="fixed">
-        <value>CanonUsado.class</value>
+        <value>CannonUsado.class</value>
       </parameter>
     </messageevent>
 
@@ -820,7 +820,7 @@
         <value>SFipa.NUGGETS_XML</value>
       </parameter>
       <parameter name="content-class" class="Class" direction="fixed">
-        <value>CanonUsado.class</value>
+        <value>CannonUsado.class</value>
       </parameter>
     </messageevent>
 
@@ -832,7 +832,7 @@
         <value>SFipa.NUGGETS_XML</value>
       </parameter>
       <parameter name="content-class" class="Class" direction="fixed">
-        <value>CanonUsado.class</value>
+        <value>CannonUsado.class</value>
       </parameter>
     </messageevent>
 

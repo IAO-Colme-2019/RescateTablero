@@ -11,13 +11,13 @@ import rescate.ontologia.conceptos.*;
 import rescate.ontologia.conceptos.Casilla.Conexion;
 import rescate.ontologia.predicados.*;
 
-class UsarCanonDeAguaPlan extends Plan {
+class UsarCannonDeAguaPlan extends Plan {
 
   @Override
   public void body() {
 
     System.out.println("[PLAN] El tablero recibe petición de usar el cañón de agua");
-    CanonUsado cu = new CanonUsado();
+    CannonUsado cu = new CannonUsado();
     
     // Petición
     IMessageEvent peticion = (IMessageEvent) getInitialEvent();
