@@ -8,7 +8,7 @@ public class Casilla extends Concepto {
 	}
 
 	public enum PuntoInteres {
-		NADA, OCULTO, FALSA_ALARMA, VICTIMA, VICTIMA_CURADA
+		NADA, OCULTO, VICTIMA_OCULTO, FALSA_ALARMA_OCULTO, FALSA_ALARMA, VICTIMA, VICTIMA_CURADA
 	}
 
 	public enum Direccion {
@@ -29,18 +29,18 @@ public class Casilla extends Concepto {
 
 	private Fuego tieneFuego;
 	private boolean tieneMateriaPeligrosa;
-  private boolean tieneFocoCalor;
+    private boolean tieneFocoCalor;
 
-  private PuntoInteres puntoInteres;
+    private PuntoInteres puntoInteres;
   
 	private Direccion flecha;
 
 	private boolean camionBomberos;
 	private boolean ambulancia;
 	private boolean esAparcamientoCamion;
-  private boolean esAparcamientoAmbulancia;
+    private boolean esAparcamientoAmbulancia;
   
-  private int habitacion;
+    private int habitacion;
 
 	/*** Getters & Setters ***/
 	public int[] getPosicion() {

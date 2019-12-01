@@ -69,10 +69,29 @@ class MoverJugadorPlan extends Plan {
     else {
       if (jugador.getPuntosAccion() + jugador.getPuntosAccionMovimiento() >= puntosAccionNecesarios(destino, jugador)) {
         jugador.setPosicion(destino.getPosicion());
+        if(destino.getPuntoInteres()==Casilla.PuntoInteres.VICTIMA_OCULTO){
+          destino.setPuntoInteres(Casilla.PuntoInteres.VICTIMA);
+        }else if (destino.getPuntoInteres()==Casilla.PuntoInteres.FALSA_ALARMA_OCULTO){
+          destino.setPuntoInteres(Casilla.PuntoInteres.FALSA_ALARMA);
+        }
+        getBeliefbase().getBelief("tablero").setFact(t);
+
+        System.out.println("[INFO] El jugador con id " + idJugador + " se ha desplazado a la casilla" + destino.getPosicion()[0] + " , "+ destino.getPosicion()[1]);
+        // Se rechaza la petición de acción del jugador
+        IMessageEvent respuesta = createMessageEvent("Inform_Desplazar");
+        respuesta.setContent(new Desplazado());
+        respuesta.getParameterSet(SFipa.RECEIVERS).addValue(idJugador);
+        sendMessage(respuesta);
       }
       else {
-
+        System.out.println("[RECHAZADO] El jugador con id " + idJugador + " no tiene PA suficientes para desplazarse");
+        // Se rechaza la petición de acción del jugador
+        IMessageEvent respuesta = createMessageEvent("Refuse_Desplazar");
+        respuesta.setContent(accion);
+        respuesta.getParameterSet(SFipa.RECEIVERS).addValue(idJugador);
+        sendMessage(respuesta);
       }
+      
     }
 
   }
