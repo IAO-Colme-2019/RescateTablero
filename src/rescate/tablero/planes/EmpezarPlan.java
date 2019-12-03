@@ -37,6 +37,7 @@ public class EmpezarPlan extends Plan{
 		// Lista de jugadores
 		ArrayList<Jugador> jugadores = t.getJugadores();
 
+		// Inicializacion de los atributos de cada casilla siguendo el modelo que hemos definido
 		for (int i = 0; i < modelo.length; i++) {
 			for (int j = 0; i < modelo[i].length; j++) {
 				mapa[i][j] = new Casilla();
@@ -53,10 +54,9 @@ public class EmpezarPlan extends Plan{
 		}
 		t.setMapa(mapa);
 		
-		// 3 fuegos con foco de calor y una explosión en cada uno
-		/*PropagarFuegoPlan p = new PropagarFuegoPlan();
+		// 3 fuegos con foco de calor y una explosion en cada uno
 		for (int i = 0; i < 3; i++) {
-			// Posiciones aleatorias para la materia peligrosa
+			// Posiciones aleatorias para el fuego y el foco de calor
 		    int X = (int) (Math.random() * 8 + 1);
 		    int Y = (int) (Math.random() * 6 + 1);
 		    // Casilla en la posicion X e Y
@@ -64,15 +64,14 @@ public class EmpezarPlan extends Plan{
 		    if (casilla.tieneFuego() == Casilla.Fuego.NADA) {
 				mapa[Y][X].setTieneFuego(Casilla.Fuego.FUEGO);
 				mapa[Y][X].setTieneFocoCalor(true);
-				p.metodoExplosion(mapa[Y][X], mapa);
+				explosion(Y, X);
 			}else i--;
-		}*/
+		}
 		
 		// Colocamos 3 PDI en posiciones random
-		ColocarPuntosInteresPlan c = new ColocarPuntosInteresPlan();
-		c.body();
-		c.body();
-		c.body();
+		ColocarPDI();
+		ColocarPDI();
+		ColocarPDI();
 		mapa = t.getMapa();
 		
 		// Colocamos 6 materias peligrosas
@@ -160,6 +159,166 @@ public class EmpezarPlan extends Plan{
 		// Actualizamos el belief del tablero
 		getBeliefbase().getBelief("tablero").setFact(t);
 			
+	}
+
+	// Explosion arriba, derecha, abajo e izquierda dada una casilla[X, Y]
+	private void explosion(int X, int Y) {
+		explosion(X, Y, 0);
+		explosion(X, Y, 1);
+		explosion(X, Y, 2);
+		explosion(X, Y, 3);
+	}
+	
+	  // Explosion en una direccion desde una casilla[X, Y]
+	private void explosion(int X, int Y, int direccion) {
+	
+		// Posicion nueva casilla
+		int X_ = X;
+		int Y_ = Y;
+		// Direccion opuesta para dañar conexion
+		int direccion_ = 0;
+	
+		// Dependiendo de la direccion
+		switch (direccion) {
+		  case 0:
+			Y_ = Y - 1;
+			direccion_ = 2;
+			break;
+		  case 1:
+			X_ = X + 1;
+			direccion_ = 3;
+			break;
+		  case 2:
+			Y_ = Y + 1;
+			direccion_ = 0;
+			break;
+		  case 3:
+			X_ = X - 1;
+			direccion_ = 1;
+			break;
+		}
+	
+		// Si la casilla esta dentro de los limites
+		if (Y > -1 && X > -1 && Y < mapa.length && X < mapa[0].length) {
+		  // Si hay obstaculo, se daña y se para
+		  if (obstaculo(X, Y, direccion)) {
+			// Si es una pared
+			if(mapa[Y][X].getConexiones()[direccion] != Casilla.Conexion.PUERTA_CERRADA) {
+			  // Se reduce en uno los cubos de daño
+			  getBeliefbase().getBelief("cubosDanno").setFact((int) getBeliefbase().getBelief("cubosDanno").getFact() - 1);
+			}
+			mapa[Y][X].dannarConexion(direccion);
+			mapa[Y_][X_].dannarConexion(direccion_);
+			return;
+		  }
+		  // Si hay una puerta abierta, se daña y se continua
+		  if (mapa[Y][X].getConexiones()[direccion] == Casilla.Conexion.PUERTA_ABIERTA) {
+			mapa[Y][X].dannarConexion(direccion);
+			mapa[Y_][X_].dannarConexion(direccion_);
+		  }
+		  // Si la nueva casilla esta dentro de los limites
+		  if (Y_ > -1 && X_ > -1 && Y_ < mapa.length && X_ < mapa[0].length) {
+			// Si no hay fuego, se cambia a fuego y se para
+			if (mapa[Y_][X_].tieneFuego() != Casilla.Fuego.FUEGO) {
+			  mapa[Y_][X_].setTieneFuego(Casilla.Fuego.FUEGO);
+			  return;
+			}
+			// Si hay fuego, se realiza una nueva explosion en la misma direccion
+			explosion(X_, Y_, direccion);
+		  }
+		}
+	}
+
+	// Devuelve si hay un obstaculo (pared sin romper o puerta cerrada) en la direccion indicada de una casilla
+	private boolean obstaculo(int X, int Y, int direccion) {
+		return mapa[Y][X].getConexiones()[direccion] == Casilla.Conexion.PUERTA_CERRADA
+			|| mapa[Y][X].getConexiones()[direccion] == Casilla.Conexion.PARED
+			|| mapa[Y][X].getConexiones()[direccion] == Casilla.Conexion.PARED_SEMIRROTA;
+	}
+
+	private void ColocarPDI() {
+
+		// Posiciones aleatorias para el nuevo PDI en el tablero
+		int X = (int) (Math.random() * 8 + 1);
+		int Y = (int) (Math.random() * 6 + 1);
+		// Casilla en la posicion X e Y
+		Casilla c = mapa[Y][X];
+	
+		// Se evitan posibles bucles infinitos (por las flechas)
+		int maxIntentos = 11;
+		int intentos = 0;
+	
+		// Hasta que se coloque el PDI
+		while (true) {
+	
+		  // Nuevo intento
+		  intentos++;
+	
+		  // Si se ha entrado en un bucle infinito
+		  if (intentos > maxIntentos) {
+			for (int i = 1; i < mapa.length - 1; i++) {
+			  for (int j = 1; j < mapa[i].length - 1; j++) {
+				// Se encuentra la primera casilla en la que sea viable poner el PDI
+				Casilla c_ = mapa[i][j];
+				if (c_.getPuntoInteres() == Casilla.PuntoInteres.NADA && c_.tieneFuego() != Casilla.Fuego.FUEGO) {
+				  // Se coloca el PDI (oculto y cuando se descubra se decidirá si es falsa alarma o víctima)
+				  System.out.println("[INFO] Se ha colocado un PDI en la casilla[" + c.getPosicion()[0] + ", " + c.getPosicion()[1] + "]");
+				  c.setPuntoInteres(Casilla.PuntoInteres.OCULTO);
+				  return;
+				}
+			  }
+			}
+		  }
+	
+		  // Se puede colocar...
+		  if (c.getPuntoInteres() == Casilla.PuntoInteres.NADA && c.tieneFuego() != Casilla.Fuego.FUEGO) {
+	
+			// Se coloca el PDI (oculto y cuando se descubra se decidirá si es falsa alarma o víctima)
+			System.out.println("[INFO] Se ha colocado un PDI en la casilla[" + c.getPosicion()[0] + ", " + c.getPosicion()[1] + "]");
+			c.setPuntoInteres(Casilla.PuntoInteres.OCULTO);
+			break;
+	
+		  }
+	
+		  // No se puede colocar, se siguen las flechas para encontrar una nueva posible casilla
+		  else {
+			// La nueva casilla es la indica por la flecha de la casilla actual
+			switch (c.getFlecha()) {
+			  case ARRIBA:
+				Y--;
+				break;
+			  case ARRIBA_DERECHA:
+				X++;
+				Y--;
+				break;
+			  case DERECHA:
+				X++;
+				break;
+			  case ABAJO_DERECHA:
+				X++;
+				Y++;
+				break;
+			  case ABAJO:
+				Y++;
+				break;
+			  case ABAJO_IZQUIERDA:
+				X--;
+				Y++;
+				break;
+			  case IZQUIERDA:
+				X--;
+				break;
+			  case ARRIBA_IZQUIERDA:
+				X--;
+				Y--;
+				break;
+			  case NADA:
+				break;
+			}
+			// Se actualiza la casilla
+			c = mapa[Y][X];
+		  }
+		}
 	}
 	
 }
