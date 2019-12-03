@@ -114,13 +114,13 @@ class MandoPlan extends Plan {
           // Se actualiza en la base de creencias el hecho tablero
           getBeliefbase().getBelief("tablero").setFact(t);
           // Se informa al jugador de que la acción ha sido llevada a cabo
-          IMessageEvent respuesta = createMessageEvent("Inform_Orden_Recibida");
-          respuesta.setContent(new OrdenRecibida(puntosAccion));
+          IMessageEvent respuesta = createMessageEvent("Inform_Orden_Completada");
+          respuesta.setContent(new OrdenCompletada(puntosAccion));
           respuesta.getParameterSet(SFipa.RECEIVERS).addValue(idJugador);
           sendMessage(respuesta);
         }
         else {
-          System.out.println("[FALLO] El jefe no dispone de PA necesarios para realizar la accion");
+          System.out.println("[RECHAZAR] El jefe no dispone de PA necesarios para realizar la accion");
           // Se rechaza la petición de acción del jugador
           IMessageEvent respuesta = createMessageEvent("Refuse_Dar_Orden");
           respuesta.setContent(accion);
