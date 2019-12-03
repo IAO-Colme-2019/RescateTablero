@@ -8,7 +8,7 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class MoverJugadorPlan extends Plan {
+class DesplazarPlan extends Plan {
 
   @Override
   public void body() {
