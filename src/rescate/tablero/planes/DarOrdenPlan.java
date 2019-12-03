@@ -37,7 +37,7 @@ class MandoPlan extends Plan {
     if(jugadorJefe.getHabitacion()==jugadorEsclavo.getHabitacion() 
       || (accion.getAccion() == DarOrden.Mandato.ABRIR && conexion == Casilla.Conexion.PUERTA_CERRADA)
       || (accion.getAccion() == DarOrden.Mandato.CERRAR && conexion == Casilla.Conexion.PUERTA_ABIERTA)
-      || (accion.getAccion() == DarOrden.Mandato.MOVER && !MoverJugadorPlan.hayObstaculo(conexion))){
+      || (accion.getAccion() == DarOrden.Mandato.MOVER && !DesplazarPlan.hayObstaculo(conexion))){
 
         boolean accionRealizada = false;
         int puntosAccion = 0;
@@ -94,10 +94,10 @@ class MandoPlan extends Plan {
           puntosAccion = 1;
         
         }
-        else if ( accion.getAccion() == DarOrden.Mandato.MOVER && jugadorJefe.getPuntosAccion() + ((jugadorEsclavo.getRol() != Jugador.Rol.ESPUMA_IGNIFUGA) ? jugadorJefe.getPuntosAccionMando() : 1)  > MoverJugadorPlan.puntosAccionNecesarios(colindante, jugadorEsclavo)){
+        else if ( accion.getAccion() == DarOrden.Mandato.MOVER && jugadorJefe.getPuntosAccion() + ((jugadorEsclavo.getRol() != Jugador.Rol.ESPUMA_IGNIFUGA) ? jugadorJefe.getPuntosAccionMando() : 1)  > DesplazarPlan.puntosAccionNecesarios(colindante, jugadorEsclavo)){
             jugadorEsclavo.setPosicion(colindante.getPosicion());
             accionRealizada = true;
-            puntosAccion = MoverJugadorPlan.puntosAccionNecesarios(colindante, jugadorEsclavo);
+            puntosAccion = DesplazarPlan.puntosAccionNecesarios(colindante, jugadorEsclavo);
         }
 
         if (accionRealizada) {
