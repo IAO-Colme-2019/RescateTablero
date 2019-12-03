@@ -4,7 +4,6 @@ import jadex.adapter.fipa.*;
 import jadex.runtime.IMessageEvent;
 import jadex.runtime.Plan;
 
-import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
@@ -15,33 +14,12 @@ class CambiarTurnoPlan extends Plan {
 
     System.out.println("[PLAN] El tablero recibe petición de cambiar turno");
     
-    // Petición
-    IMessageEvent peticion = (IMessageEvent) getInitialEvent();
-
+    
     // Tablero
     Tablero t = (Tablero) getBeliefbase().getBelief("tablero").getFact();
-
+    
     // Turno
     int turno = (int) getBeliefbase().getBelief("turno").getFact();
-
-    // Parámetros de la peticion
-    AgentIdentifier idJugador = (AgentIdentifier) peticion.getParameter("sender").getValue();
-    CambiarTurno accion = (CambiarTurno) peticion.getContent();
-    
-    // Se comprueba que sea el turno del jugador
-    if (t.getIndiceJugador(idJugador) != (turno % t.getJugadores().size())) {
-      System.out.println("[RECHAZADO] No es el turno del jugador con id " + idJugador);
-      // Se rechaza la petición de acción del jugador
-      IMessageEvent respuesta = createMessageEvent("Refuse_Cambiar_Turno");
-      respuesta.setContent(accion);
-      respuesta.getParameterSet(SFipa.RECEIVERS).addValue(idJugador);
-      sendMessage(respuesta);
-      return;
-    }
-    
-    // Se suma el turno y se pone el belief
-    turno++;
-    getBeliefbase().getBelief("turno").setFact(turno);
     
     // Se encuentra en la lista de jugadores del tablero el jugador al que le toca jugar en el siguiente turno
     int indiceProximoJugador = turno % t.getJugadores().size();
@@ -65,16 +43,16 @@ class CambiarTurnoPlan extends Plan {
       }
     }
 
-    System.out.println("[INFO] Turno cambiado, ahora juega el jugador con id " + idJugador);
-    
-    // Se informa al jugador que el turno se ha cambiado correctamente
-    IMessageEvent respuesta = createMessageEvent("Inform_Turno_Cambiado");
-    respuesta.setContent(new TurnoCambiado());
-    respuesta.getParameterSet(SFipa.RECEIVERS).addValue(idJugador);
-    sendMessage(respuesta);
+    getBeliefbase().getBelief("siguienteTurno").setFact(false);
+
+    // Con esto evitamos que se pueda quedar a true porque haya más de 3 PDIs y así no puede poner PDIs a mitad de turno
+    getBeliefbase().getBelief("finTurno").setFact(false);
+
+
+    System.out.println("[INFO] Turno cambiado, ahora juega el jugador con id " + indiceProximoJugador);
 
     // Se informa también al jugador al que le toca ahora jugar
-    respuesta = createMessageEvent("Inform_Turno_Asignado");
+    IMessageEvent respuesta = createMessageEvent("Inform_Turno_Asignado");
     TurnoAsignado predicado = new TurnoAsignado();
     predicado.setHabitacion(t.getHabitacion(jugador.getHabitacion()));
     respuesta.setContent(predicado);

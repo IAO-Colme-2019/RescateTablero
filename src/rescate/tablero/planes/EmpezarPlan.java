@@ -74,8 +74,8 @@ public class EmpezarPlan extends Plan{
 		ColocarPDI();
 		mapa = t.getMapa();
 		
-		// Colocamos 6 materias peligrosas
-		for (int i = 0; i < 6; i++) {
+		// Colocamos 4 materias peligrosas
+		for (int i = 0; i < 4; i++) {
 			// Posiciones aleatorias para la materia peligrosa
 		    int X = (int) (Math.random() * 8 + 1);
 		    int Y = (int) (Math.random() * 6 + 1);
@@ -158,7 +158,8 @@ public class EmpezarPlan extends Plan{
 
 		// Actualizamos el belief del tablero
 		getBeliefbase().getBelief("tablero").setFact(t);
-			
+		getBeliefbase().getBelief("empezar").setFact(false);
+		
 	}
 
 	// Explosion arriba, derecha, abajo e izquierda dada una casilla[X, Y]

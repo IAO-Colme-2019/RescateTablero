@@ -51,6 +51,7 @@ class UnirJugadorPlan extends Plan {
 
     // Se actualiza en la base de creencias el hecho tablero
     getBeliefbase().getBelief("tablero").setFact(t);
+    getBeliefbase().getBelief("numJugadores").setFact(((int) getBeliefbase().getBelief("numJugadores").getFact())+1);
 
     // Se informa de que el jugador se ha unido
     IMessageEvent respuesta = createMessageEvent("Inform_Jugador_Unido");
