@@ -75,6 +75,12 @@ class UsarCannonDeAguaPlan extends Plan {
         }
         apagarAdyacentes(posicion);
 
+        // Se rechaza la petición de acción del jugador
+        IMessageEvent respuesta = createMessageEvent("Inform_Cannon_De_Agua_Usado");
+        respuesta.setContent(new CannonDeAguaUsado());
+        respuesta.getParameterSet(SFipa.RECEIVERS).addValue(idJugador);
+        sendMessage(respuesta);
+
       }
       else {
 

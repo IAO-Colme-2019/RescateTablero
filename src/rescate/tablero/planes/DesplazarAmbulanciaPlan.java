@@ -224,7 +224,7 @@ class DesplazarAmbulanciaPlan extends Plan {
         getBeliefbase().getBelief("salvados").setFact((int) getBeliefbase().getBelief("salvados").getFact() + victimas_salvadas);
 
         // Se informa al jugador de que la acción ha sido llevada a cabo
-        IMessageEvent respuesta = createMessageEvent("Inform_Desplazar_Ambulancia");
+        IMessageEvent respuesta = createMessageEvent("Inform_Ambulancia_Desplazada");
         respuesta.setContent(new AmbulanciaDesplazada());
         respuesta.getParameterSet(SFipa.RECEIVERS).addValue(idJugador);
         sendMessage(respuesta);
