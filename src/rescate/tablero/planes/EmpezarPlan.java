@@ -1,6 +1,5 @@
 package rescate.tablero.planes;
 
-import java.util.ArrayList;
 
 import jadex.adapter.fipa.SFipa;
 import jadex.runtime.IMessageEvent;
@@ -35,9 +34,6 @@ public class EmpezarPlan extends Plan {
     // Tablero
     t = (Tablero) getBeliefbase().getBelief("tablero").getFact();
     t.setMapa(new Casilla[modelo.length][modelo[0].length]);
-
-    // Lista de jugadores
-    ArrayList<Jugador> jugadores = t.getJugadores();
 
     // Inicializacion de los atributos de cada casilla siguendo el modelo que hemos
     // definido
@@ -134,33 +130,27 @@ public class EmpezarPlan extends Plan {
     }
 
     // Posicion inicial de jugadores
-    ArrayList<Jugador> j = new ArrayList<Jugador>();
-    for (int i = 0; i < jugadores.size(); i++) {
-      Jugador jugador = jugadores.get(i);
+    for (int i = 0; i < t.getJugadores().size(); i++) {
       switch ((int) (Math.random() * 4)) {
         case 0:
-          jugador.setPosicion(new int[] { 6, 0 });
+          t.getJugadores().get(i).setPosicion(new int[] { 6, 0 });
           break;
         case 1:
-          jugador.setPosicion(new int[] { 9, 4 });
+          t.getJugadores().get(i).setPosicion(new int[] { 9, 4 });
           break;
         case 2:
-          jugador.setPosicion(new int[] { 3, 7 });
+          t.getJugadores().get(i).setPosicion(new int[] { 3, 7 });
           break;
         case 3:
-          jugador.setPosicion(new int[] { 0, 3 });
+          t.getJugadores().get(i).setPosicion(new int[] { 0, 3 });
           break;
         default:
           break;
       }
-      jugador.setHabitacion(0);
-      jugador.setLlevandoVictima(Jugador.LlevandoVictima.NO);
-      jugador.setRol(Jugador.Rol.NINGUNO);
-      j.add(jugador);
+      t.getJugadores().get(i).setHabitacion(0);
+      t.getJugadores().get(i).setLlevandoVictima(Jugador.LlevandoVictima.NO);
+      t.getJugadores().get(i).setRol(Jugador.Rol.NINGUNO);
     }
-
-    // Actualizamos la informacion de los jugadores
-    t.setJugadores(j);
 
     // Actualizamos el belief del tablero
     getBeliefbase().getBelief("tablero").setFact(t);
@@ -170,9 +160,9 @@ public class EmpezarPlan extends Plan {
     // Se informa también al jugador al que le toca ahora jugar
     IMessageEvent respuesta = createMessageEvent("Inform_Turno_Asignado");
     TurnoAsignado predicado = new TurnoAsignado();
-    predicado.setHabitacion(t.getHabitacion(jugadores.get(0).getHabitacion()));
+    predicado.setHabitacion(t.getHabitacion(0));
     respuesta.setContent(predicado);
-    respuesta.getParameterSet(SFipa.RECEIVERS).addValue(jugadores.get(0).getIdAgente());
+    respuesta.getParameterSet(SFipa.RECEIVERS).addValue(t.getJugadores().get(0).getIdAgente());
     sendMessage(respuesta);
   }
 
