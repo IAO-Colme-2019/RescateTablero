@@ -47,7 +47,7 @@ class CambiarTurnoPlan extends Plan {
     // Con esto evitamos que se pueda quedar a true porque haya más de 3 PDIs y así no puede poner PDIs a mitad de turno
     getBeliefbase().getBelief("finTurno").setFact(false);
 
-    System.out.println("[INFO] Turno cambiado, ahora juega el jugador con id " + indiceProximoJugador);
+    System.out.println("[INFO] Turno cambiado, ahora juega el jugador con id " + jugador.getIdAgente());
 
     // Se informa también al jugador al que le toca ahora jugar
     IMessageEvent respuesta = createMessageEvent("Inform_Turno_Asignado");
