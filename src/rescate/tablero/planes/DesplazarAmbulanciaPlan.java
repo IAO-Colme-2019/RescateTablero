@@ -222,7 +222,6 @@ class DesplazarAmbulanciaPlan extends Plan {
         getBeliefbase().getBelief("PDITablero").setFact((int) getBeliefbase().getBelief("PDITablero").getFact() - victimas_salvadas);
         // Se aumenta en uno las victimas salvadas
         getBeliefbase().getBelief("salvados").setFact((int) getBeliefbase().getBelief("salvados").getFact() + victimas_salvadas);
-
         // Se informa al jugador de que la acción ha sido llevada a cabo
         IMessageEvent respuesta = createMessageEvent("Inform_Ambulancia_Desplazada");
         respuesta.setContent(new AmbulanciaDesplazada());

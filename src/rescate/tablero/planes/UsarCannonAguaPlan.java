@@ -8,7 +8,7 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class UsarCannonDeAguaPlan extends Plan {
+class UsarCannonAguaPlan extends Plan {
 
   public enum Aparcamiento {
     ARRIBA, DERECHA, ABAJO, IZQUIERDA

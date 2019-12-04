@@ -1042,7 +1042,7 @@
         <value>SFipa.NUGGETS_XML</value>
       </parameter>
       <parameter name="content-class" class="Class" direction="fixed">
-        <value>DesplazarAmbulanciaPlan.class</value>
+        <value>DesplazarAmbulancia.class</value>
       </parameter>
     </messageevent>
 
@@ -1066,7 +1066,7 @@
         <value>SFipa.NUGGETS_XML</value>
       </parameter>
       <parameter name="content-class" class="Class" direction="fixed">
-        <value>DesplazarAmbulanciaPlan.class</value>
+        <value>DesplazarAmbulancia.class</value>
       </parameter>
     </messageevent>
 
@@ -1275,7 +1275,7 @@
         <value>SFipa.NUGGETS_XML</value>
       </parameter>
       <parameter name="content-class" class="Class" direction="fixed">
-        <value>JugadorUnido.class</value>
+        <value>CannonDeAguaUsado.class</value>
       </parameter>
     </messageevent>
     
