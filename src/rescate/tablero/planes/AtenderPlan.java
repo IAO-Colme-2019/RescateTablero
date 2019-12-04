@@ -8,7 +8,7 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class AtenderPlan extends Plan {
+public class AtenderPlan extends Plan {
 
   @Override
   public void body() {
@@ -34,7 +34,7 @@ class AtenderPlan extends Plan {
     // Fichas atención medica
     int primerosAuxilios = (int) getBeliefbase().getBelief("primerosAuxilios").getFact();
 
-    if (c.getPuntoInteres() != Casilla.PuntoInteres.VICTIMA) {
+    if (c.getPuntoInteres() != 2) {
       System.out.println("[FALLO] El jugador con id " + idJugador + " no está en una casilla con víctima");
       // Se rechaza la petición de acción del jugador
       IMessageEvent respuesta = createMessageEvent("Failure_Atender");
@@ -42,7 +42,7 @@ class AtenderPlan extends Plan {
       respuesta.getParameterSet(SFipa.RECEIVERS).addValue(idJugador);
       sendMessage(respuesta);
     }
-    else if (jugador.getRol() != Jugador.Rol.SANITARIO) {
+    else if (jugador.getRol() != 1) {
       System.out.println("[FALLO] El jugador con id " + idJugador + " no tiene el rol necesario para atender (sanitario)");
       // Se rechaza la petición de acción del jugador
       IMessageEvent respuesta = createMessageEvent("Failure_Atender");
@@ -55,7 +55,7 @@ class AtenderPlan extends Plan {
       if (jugador.getPuntosAccion() > 0 && primerosAuxilios > 0) {
         System.out.println("[INFO] El jugador con id " + idJugador + " atiende a la víctima en la casilla[" + c.getPosicion()[0] + ", " + c.getPosicion()[1] + "]");
         // Se actualiza el PDI
-        c.setPuntoInteres(Casilla.PuntoInteres.VICTIMA_CURADA);
+        c.setPuntoInteres(3);
          // Se reduce los puntos de acción del jugador 
         jugador.setPuntosAccion(jugador.getPuntosAccion()-1);
         // Se actualiza en la base de creencias el hecho tablero

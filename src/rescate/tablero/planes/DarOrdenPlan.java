@@ -8,7 +8,7 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class DarOrdenPlan extends Plan {
+public class DarOrdenPlan extends Plan {
 
   @Override
   public void body() {
@@ -32,15 +32,15 @@ class DarOrdenPlan extends Plan {
     
     // Casilla del jugador esclavo
     Casilla c = t.getMapa()[jugadorEsclavo.getPosicion()[1]][jugadorEsclavo.getPosicion()[0]];
-    Casilla.Conexion conexion = c.getConexiones()[accion.getConexion()];
+    int conexion = c.getConexiones()[accion.getConexion()];
 
     // El jugador es jefe
-    if (jugadorJefe.getRol() == Jugador.Rol.JEFE) {
+    if (jugadorJefe.getRol() == 2) {
       // Comprobamos si los jugadores estan en la misma habitación y si la accion sobre la conexion recibida es posible
       if (jugadorJefe.getHabitacion() == jugadorEsclavo.getHabitacion() &&
-          (accion.getAccion() == DarOrden.Mandato.ABRIR && conexion == Casilla.Conexion.PUERTA_CERRADA || 
-          accion.getAccion() == DarOrden.Mandato.CERRAR && conexion == Casilla.Conexion.PUERTA_ABIERTA || 
-          accion.getAccion() == DarOrden.Mandato.MOVER && !DesplazarPlan.hayObstaculo(conexion))) {
+          (accion.getAccion() == 1 && conexion == 2 || 
+          accion.getAccion() == 2 && conexion == 1 || 
+          accion.getAccion() == 0 && !DesplazarPlan.hayObstaculo(conexion))) {
 
           boolean accionRealizada = false;
           int PA = 0;
@@ -67,10 +67,10 @@ class DarOrdenPlan extends Plan {
           }
 
           // La acción es sobre una puerta (abrir o cerrar)
-          if ((accion.getAccion() == DarOrden.Mandato.ABRIR || accion.getAccion() == DarOrden.Mandato.CERRAR) && jugadorJefe.getPuntosAccion() + jugadorJefe.getPuntosAccionMando() > 1){
+          if ((accion.getAccion() == 1 || accion.getAccion() == 2) && jugadorJefe.getPuntosAccion() + jugadorJefe.getPuntosAccionMando() > 1){
             System.out.println("[INFO] El jugador con id " + accion.getIdJugador() + " ha abierto una puerta en la casilla[" + c.getPosicion()[0] + ", " + c.getPosicion()[1] + "] debido a la orden del jugador "+ idJugador);
             // Abierta o cerrada
-            Casilla.Conexion nuevoEstado = ((accion.getAccion() == DarOrden.Mandato.ABRIR) ? Casilla.Conexion.PUERTA_ABIERTA : Casilla.Conexion.PUERTA_CERRADA);
+            int nuevoEstado = ((accion.getAccion() == 1) ? 1 : 2);
             c.getConexiones()[accion.getConexion()] = nuevoEstado;
             // Casilla colindante (donde también esta la referencia a la puerta cerrada y hay que abrirla)
             switch (accion.getConexion()) {
@@ -99,7 +99,7 @@ class DarOrdenPlan extends Plan {
             PA = 1;
           }
           // La accion es moverse
-          else if (accion.getAccion() == DarOrden.Mandato.MOVER && jugadorJefe.getPuntosAccion() + ((jugadorEsclavo.getRol() != Jugador.Rol.ESPUMA_IGNIFUGA) ? jugadorJefe.getPuntosAccionMando() : ((jugadorJefe.getPuntosAccionMando() > 0) ? 1 : 0)) > DesplazarPlan.puntosAccionNecesarios(colindante, jugadorEsclavo)){
+          else if (accion.getAccion() == 0 && jugadorJefe.getPuntosAccion() + ((jugadorEsclavo.getRol() != 4) ? jugadorJefe.getPuntosAccionMando() : ((jugadorJefe.getPuntosAccionMando() > 0) ? 1 : 0)) > DesplazarPlan.puntosAccionNecesarios(colindante, jugadorEsclavo)){
             // Se baja de los vehiculos si esta subido
             jugadorEsclavo.setSubidoAmbulancia(false);
             jugadorEsclavo.setSubidoCamion(false);
@@ -109,23 +109,23 @@ class DarOrdenPlan extends Plan {
             int PDITablero = (int) getBeliefbase().getBelief("PDITablero").getFact();
             int PDIVictima = (int) getBeliefbase().getBelief("PDIVictima").getFact();
             int PDIFalsaAlarma = (int) getBeliefbase().getBelief("PDIFalsaAlarma").getFact();
-            if (colindante.getPuntoInteres() == Casilla.PuntoInteres.OCULTO) {
+            if (colindante.getPuntoInteres() == 1) {
               // Si no queda de un tipo, se coloca del otro...
               if (PDIVictima == 0) {
-                colindante.setPuntoInteres(Casilla.PuntoInteres.NADA);
+                colindante.setPuntoInteres(0);
                 PDIFalsaAlarma--;
                 PDITablero--;
               } else if (PDIFalsaAlarma == 0) {
-                colindante.setPuntoInteres(Casilla.PuntoInteres.VICTIMA);
+                colindante.setPuntoInteres(2);
                 PDIVictima--;
               }
               // Si quedan de los dos tipos, de manera aleatoria...
               else if (Math.random() < 0.5) {
-                colindante.setPuntoInteres(Casilla.PuntoInteres.NADA);
+                colindante.setPuntoInteres(0);
                 PDIFalsaAlarma--;
                 PDITablero--;
               } else {
-                colindante.setPuntoInteres(Casilla.PuntoInteres.VICTIMA);
+                colindante.setPuntoInteres(2);
                 PDIVictima--;
               }
             }

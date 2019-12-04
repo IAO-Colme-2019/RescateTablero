@@ -8,7 +8,7 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class AbrirPuertaPlan extends Plan {
+public class AbrirPuertaPlan extends Plan {
 
 	@Override
 	public void body() {
@@ -32,7 +32,7 @@ class AbrirPuertaPlan extends Plan {
     Casilla c = t.getMapa()[jugador.getPosicion()[1]][jugador.getPosicion()[0]];
 
     // Si la conexión no es una puerta cerrada...
-		if (c.getConexiones()[accion.getConexion()] != Casilla.Conexion.PUERTA_CERRADA) {
+		if (c.getConexiones()[accion.getConexion()] != 2) {
       System.out.println("[FALLO] No hay una puerta cerrada en la conexión indicada de la casilla del jugador");
       // Se rechaza la petición de acción del jugador
       IMessageEvent respuesta = createMessageEvent("Failure_Abrir_Puerta");
@@ -55,29 +55,29 @@ class AbrirPuertaPlan extends Plan {
       else {
         System.out.println("[INFO] El jugador con id " + idJugador + " ha abierto una puerta en la casilla[" + c.getPosicion()[0] + ", " + c.getPosicion()[1] + "]");
         // Se modifica la conexion a puerta abierta
-        c.getConexiones()[accion.getConexion()] = Casilla.Conexion.PUERTA_ABIERTA;
+        c.getConexiones()[accion.getConexion()] = 1;
         // Casilla colindante (donde también esta la referencia a la puerta cerrada y hay que abrirla)
         Casilla colindante = null;
         switch (accion.getConexion()) {
           // Arriba
           case 0:
             colindante = t.getMapa()[c.getPosicion()[1] - 1][c.getPosicion()[0]];
-            colindante.getConexiones()[2] = Casilla.Conexion.PUERTA_ABIERTA;
+            colindante.getConexiones()[2] = 1;
             break;
           // Derecha
           case 1:
             colindante = t.getMapa()[c.getPosicion()[1]][c.getPosicion()[0] + 1];
-            colindante.getConexiones()[3] = Casilla.Conexion.PUERTA_ABIERTA;
+            colindante.getConexiones()[3] = 1;
             break;
           // Abajo
           case 2:
             colindante = t.getMapa()[c.getPosicion()[1] + 1][c.getPosicion()[0]];
-            colindante.getConexiones()[0] = Casilla.Conexion.PUERTA_ABIERTA;
+            colindante.getConexiones()[0] = 1;
             break;
           // Izquierda
           case 3:
             colindante = t.getMapa()[c.getPosicion()[1]][c.getPosicion()[0] - 1];
-            colindante.getConexiones()[1] = Casilla.Conexion.PUERTA_ABIERTA;
+            colindante.getConexiones()[1] = 1;
             break;
           // ...
           default:

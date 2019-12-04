@@ -8,11 +8,8 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class UsarCannonAguaPlan extends Plan {
+public class UsarCannonAguaPlan extends Plan {
 
-  public enum Aparcamiento {
-    ARRIBA, DERECHA, ABAJO, IZQUIERDA
-  }
 
   private Tablero t;
 
@@ -47,13 +44,13 @@ class UsarCannonAguaPlan extends Plan {
     // Si el jugador esta subido al camion
     else {
       // Suficientes PA
-      if (jugador.getPuntosAccion() > ((jugador.getRol() == Jugador.Rol.CONDUCTOR) ? 2 : 4)) {
+      if (jugador.getPuntosAccion() > ((jugador.getRol() == 8) ? 2 : 4)) {
         // Se consume el PA
-        jugador.setPuntosAccion(jugador.getPuntosAccion() - ((jugador.getRol() == Jugador.Rol.CONDUCTOR) ? 2 : 4));
+        jugador.setPuntosAccion(jugador.getPuntosAccion() - ((jugador.getRol() == 8) ? 2 : 4));
         // Se tiran los dados
         int [] posicion = tirarDados(); 
         // Preguntamos al conductor de ambualncia si quiere volver a tirar los dados 
-        if(jugador.getRol() == Jugador.Rol.CONDUCTOR) {
+        if(jugador.getRol() == 8) {
           // Pregunta
           IMessageEvent pregunta = createMessageEvent("Request_Aceptar_Tirada");
           pregunta.getParameterSet(SFipa.RECEIVERS).addValue(idJugador);
@@ -117,26 +114,26 @@ class UsarCannonAguaPlan extends Plan {
   public void apagarAdyacentes(int[] posicion) {
     // Casilla y conexiones
     Casilla c =  t.getMapa()[posicion[1]][posicion[0]];
-    Casilla.Conexion[] conexiones =  c.getConexiones();;
+    int[] conexiones =  c.getConexiones();;
     // Se apaga la casilla
-    c.setTieneFuego(Casilla.Fuego.NADA);
+    c.setTieneFuego(0);
 
     // Arriba
-    if(conexiones[0] == Casilla.Conexion.NADA || conexiones[0] == Casilla.Conexion.PUERTA_ABIERTA || conexiones[0] == Casilla.Conexion.PARED_ROTA) {
-      t.getMapa()[posicion[1] - 1][posicion[0]].setTieneFuego(Casilla.Fuego.NADA);
+    if(conexiones[0] == 0 || conexiones[0] == 1 || conexiones[0] == 5) {
+      t.getMapa()[posicion[1] - 1][posicion[0]].setTieneFuego(0);
     }
     // Derecha
-    if(conexiones[1] == Casilla.Conexion.NADA || conexiones[1] == Casilla.Conexion.PUERTA_ABIERTA || conexiones[1] == Casilla.Conexion.PARED_ROTA) {
-      t.getMapa()[posicion[1]][posicion[0] + 1].setTieneFuego(Casilla.Fuego.NADA);
+    if(conexiones[1] == 0 || conexiones[1] == 1 || conexiones[1] == 5) {
+      t.getMapa()[posicion[1]][posicion[0] + 1].setTieneFuego(0);
     }
     // Abajo
-    if(conexiones[2] == Casilla.Conexion.NADA || conexiones[2] == Casilla.Conexion.PUERTA_ABIERTA || conexiones[2] == Casilla.Conexion.PARED_ROTA) {
-      t.getMapa()[posicion[1] + 1][posicion[0]].setTieneFuego(Casilla.Fuego.NADA);
+    if(conexiones[2] == 0 || conexiones[2] == 1 || conexiones[2] == 5) {
+      t.getMapa()[posicion[1] + 1][posicion[0]].setTieneFuego(0);
     }
     
     // Izquierda
-    if(conexiones[3] == Casilla.Conexion.NADA || conexiones[3] == Casilla.Conexion.PUERTA_ABIERTA || conexiones[3] == Casilla.Conexion.PARED_ROTA) {
-      t.getMapa()[posicion[1]][posicion[0] - 1].setTieneFuego(Casilla.Fuego.NADA);
+    if(conexiones[3] == 0 || conexiones[3] == 1 || conexiones[3] == 5) {
+      t.getMapa()[posicion[1]][posicion[0] - 1].setTieneFuego(0);
     }
   }
 

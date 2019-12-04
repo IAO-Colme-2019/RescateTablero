@@ -10,11 +10,8 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class DesplazarAmbulanciaPlan extends Plan {
+public class DesplazarAmbulanciaPlan extends Plan {
 
-  public enum Aparcamiento {
-    ARRIBA, DERECHA, ABAJO, IZQUIERDA
-  }
 
   @Override
   public void body() {
@@ -35,15 +32,15 @@ class DesplazarAmbulanciaPlan extends Plan {
     Jugador jugador = t.getJugador(idJugador);
 
     // Posición ambulancia
-    Aparcamiento posicionAmbulancia;
+    int posicionAmbulancia;
     if (t.getMapa()[3][0].esAmbulancia()) {
-      posicionAmbulancia = Aparcamiento.IZQUIERDA;
+      posicionAmbulancia = 3;
     } else if (t.getMapa()[0][5].esAmbulancia()) {
-      posicionAmbulancia = Aparcamiento.ARRIBA;
+      posicionAmbulancia = 0;
     } else if (t.getMapa()[3][9].esAmbulancia()) {
-      posicionAmbulancia = Aparcamiento.DERECHA;
+      posicionAmbulancia = 1;
     } else {
-      posicionAmbulancia = Aparcamiento.ABAJO;
+      posicionAmbulancia = 2;
     }
 
     // El jugador tiene PA suficientes
@@ -59,11 +56,11 @@ class DesplazarAmbulanciaPlan extends Plan {
       int victimas_salvadas = 0;
       // Dependiendo del destino...
       switch (accion.getDestino()) {
-        case ARRIBA:
+        case 0:
           // No puede conducir desde ABAJO
-          if (posicionAmbulancia != Aparcamiento.ABAJO) {
+          if (posicionAmbulancia != 1) {
             // Vienen de la IZQUIERDA
-            if (posicionAmbulancia == Aparcamiento.IZQUIERDA) {
+            if (posicionAmbulancia == 3) {
               // El camión abandona el aparcamiento actual
               t.getMapa()[3][0].setAmbulancia(false);
               t.getMapa()[4][0].setAmbulancia(false);
@@ -80,12 +77,12 @@ class DesplazarAmbulanciaPlan extends Plan {
             t.getMapa()[0][6].setAmbulancia(true);
 
             // Se salvan las victimas de esas posiciones 
-            if(t.getMapa()[0][5].getPuntoInteres() == Casilla.PuntoInteres.VICTIMA) {
-              t.getMapa()[0][5].setPuntoInteres(Casilla.PuntoInteres.NADA);
+            if(t.getMapa()[0][5].getPuntoInteres() == 2) {
+              t.getMapa()[0][5].setPuntoInteres(0);
               victimas_salvadas++;
             } 
-            if(t.getMapa()[0][6].getPuntoInteres() == Casilla.PuntoInteres.VICTIMA) {
-              t.getMapa()[0][6].setPuntoInteres(Casilla.PuntoInteres.NADA);
+            if(t.getMapa()[0][6].getPuntoInteres() == 2) {
+              t.getMapa()[0][6].setPuntoInteres(0);
               victimas_salvadas++;
             }
             
@@ -97,11 +94,11 @@ class DesplazarAmbulanciaPlan extends Plan {
             desplazado = true;
           }
           break;
-        case DERECHA:
+        case 1:
           // No puede conducir desde IZQUIERDA
-          if (posicionAmbulancia != Aparcamiento.IZQUIERDA) {
+          if (posicionAmbulancia != 3) {
             // Vienen de ARRIBA
-            if (posicionAmbulancia == Aparcamiento.ARRIBA) {
+            if (posicionAmbulancia == 0) {
               // El camión abandona el aparcamiento actual
               t.getMapa()[0][5].setAmbulancia(false);
               t.getMapa()[0][6].setAmbulancia(false);
@@ -117,12 +114,12 @@ class DesplazarAmbulanciaPlan extends Plan {
             t.getMapa()[4][9].setAmbulancia(true);
             
             // Se salvan las victimas de esas posiciones 
-            if(t.getMapa()[3][9].getPuntoInteres() == Casilla.PuntoInteres.VICTIMA) {
-              t.getMapa()[3][9].setPuntoInteres(Casilla.PuntoInteres.NADA);
+            if(t.getMapa()[3][9].getPuntoInteres() == 2) {
+              t.getMapa()[3][9].setPuntoInteres(0);
               victimas_salvadas++;
             }
-            if(t.getMapa()[4][9].getPuntoInteres() == Casilla.PuntoInteres.VICTIMA){
-              t.getMapa()[4][9].setPuntoInteres(Casilla.PuntoInteres.NADA);
+            if(t.getMapa()[4][9].getPuntoInteres() == 2){
+              t.getMapa()[4][9].setPuntoInteres(0);
               victimas_salvadas++;
             }
 
@@ -135,11 +132,11 @@ class DesplazarAmbulanciaPlan extends Plan {
             desplazado = true;
           }
           break;
-        case ABAJO:
+        case 2:
           // No puede conducir desde ARRIBA
-          if (posicionAmbulancia != Aparcamiento.ARRIBA) {
+          if (posicionAmbulancia != 0) {
             // Vienen de la IZQUIERDA
-            if (posicionAmbulancia == Aparcamiento.IZQUIERDA) {
+            if (posicionAmbulancia == 3) {
               // El camión abandona el aparcamiento actual
               t.getMapa()[3][0].setAmbulancia(false);
               t.getMapa()[4][0].setAmbulancia(false);
@@ -155,12 +152,12 @@ class DesplazarAmbulanciaPlan extends Plan {
             t.getMapa()[7][4].setAmbulancia(true);
 
             // Se salvan las victimas de esas posiciones 
-            if(t.getMapa()[7][3].getPuntoInteres() == Casilla.PuntoInteres.VICTIMA) {
-              t.getMapa()[7][3].setPuntoInteres(Casilla.PuntoInteres.NADA);
+            if(t.getMapa()[7][3].getPuntoInteres() == 2) {
+              t.getMapa()[7][3].setPuntoInteres(0);
               victimas_salvadas++;
             }
-            if(t.getMapa()[7][4].getPuntoInteres() == Casilla.PuntoInteres.VICTIMA) {
-              t.getMapa()[7][4].setPuntoInteres(Casilla.PuntoInteres.NADA);
+            if(t.getMapa()[7][4].getPuntoInteres() == 2) {
+              t.getMapa()[7][4].setPuntoInteres(0);
               victimas_salvadas++;
             }
 
@@ -172,11 +169,11 @@ class DesplazarAmbulanciaPlan extends Plan {
             desplazado = true;
           }
           break;
-        case IZQUIERDA:
+        case 3:
           // No puede conducir desde DERECHA
-          if (posicionAmbulancia != Aparcamiento.DERECHA) {
+          if (posicionAmbulancia != 1) {
             // Vienen de ARRIBA
-            if (posicionAmbulancia == Aparcamiento.ARRIBA) {
+            if (posicionAmbulancia == 0) {
               // El camión abandona el aparcamiento actual
               t.getMapa()[0][5].setAmbulancia(false);
               t.getMapa()[0][6].setAmbulancia(false);
@@ -192,12 +189,12 @@ class DesplazarAmbulanciaPlan extends Plan {
             t.getMapa()[4][0].setAmbulancia(true);
 
             // Se salvan las victimas de esas posiciones 
-            if(t.getMapa()[3][0].getPuntoInteres() == Casilla.PuntoInteres.VICTIMA) {
-              t.getMapa()[3][0].setPuntoInteres(Casilla.PuntoInteres.NADA);
+            if(t.getMapa()[3][0].getPuntoInteres() == 2) {
+              t.getMapa()[3][0].setPuntoInteres(0);
               victimas_salvadas++;
             }
-            if(t.getMapa()[4][0].getPuntoInteres() == Casilla.PuntoInteres.VICTIMA){
-              t.getMapa()[4][0].setPuntoInteres(Casilla.PuntoInteres.NADA);
+            if(t.getMapa()[4][0].getPuntoInteres() == 2){
+              t.getMapa()[4][0].setPuntoInteres(0);
               victimas_salvadas++;
             }
 

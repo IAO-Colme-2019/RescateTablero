@@ -8,7 +8,7 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class EliminarMateriaPeligrosaPlan extends Plan {
+public class EliminarMateriaPeligrosaPlan extends Plan {
 
   @Override
   public void body() {
@@ -40,7 +40,7 @@ class EliminarMateriaPeligrosaPlan extends Plan {
       respuesta.getParameterSet(SFipa.RECEIVERS).addValue(idJugador);
       sendMessage(respuesta);
     }
-    else if (jugador.getRol() != Jugador.Rol.MATERIAS_PELIGROSAS) {
+    else if (jugador.getRol() != 5) {
       System.out.println("[FALLO] El jugador con id " + idJugador + " no tiene el rol necesario para eliminar materia peligrosa (Experto en Materias Peligrosas)");
       // Se rechaza la petición de acción del jugador
       IMessageEvent respuesta = createMessageEvent("Failure_Eliminar_Materia_Peligrosa");

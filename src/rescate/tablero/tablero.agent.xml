@@ -21,7 +21,6 @@
 
   <!-- CREENCIAS -->
   <beliefs>
-
     <!-- A quien le toca actuar -->
     <belief name="turno" class="int">
       <fact>0</fact>
@@ -77,9 +76,9 @@
       <fact>0</fact>
     </belief>
 
-    <!-- Fin de partida -->
-    <belief name="finPartida" class="boolean">
-      <fact>false</fact>
+    <!-- Jugando -->
+    <belief name="jugando" class="boolean">
+      <fact>true</fact>
     </belief>
 
 	  <!-- Ha terminado una ronda de turnos -->
@@ -102,6 +101,14 @@
       <fact>true</fact>
     </belief>
 
+    <belief name="tiempoInicio" class="int">
+      <fact> (int)(System.currentTimeMillis()/1000) </fact>
+    </belief>
+
+    <belief name="tiempo" class="int" updaterate="750">  
+      <fact> (int)(System.currentTimeMillis()/1000) </fact>
+    </belief>
+
   </beliefs>
 
   <!-- METAS -->
@@ -111,42 +118,58 @@
       <concrete ref="dfcap.df_register" />
     </achievegoalref>
 
+    <!-- Objetivo finalizar partida -->
+    <performgoal name="acabarPartida" retrydelay="30000" exclude="when_succeeded" >
+      <creationcondition>
+        <!-- Que  -->
+        $beliefbase.jugando &amp;&amp;
+        (($beliefbase.victimas &gt; 3) &#124;&#124;
+        ($beliefbase.salvados &gt; 6) &#124;&#124;
+        ($beliefbase.cubosDanno &lt; 1))
+      </creationcondition>
+    </performgoal>
+
     <!-- Colocar PDI -->
     <performgoal name="colocarPDIMeta" retry="true" retrydelay="3000" exclude="never">
         <contextcondition>
+          $beliefbase.jugando &amp;&amp;
           (($beliefbase.finTurno) &amp;&amp;
           (($beliefbase.PDITablero) &lt; 3))
         </contextcondition>
     </performgoal>
 
-    <!-- Objetivo para propagar el fuego -->		
+    <!-- Objetivo para propagar el fuego -->
 		<performgoal name="propagarFuegoMeta" retry="true" retrydelay="3000" exclude="never">
 			<creationcondition>
 				<!-- Que se active cuando tenga que activarse-->
+        $beliefbase.jugando &amp;&amp;
 				$beliefbase.propagarFuego == true
 			</creationcondition>
 		</performgoal>
 
-    <!-- Objetivo para cambiar el turno -->		
+    <!-- Objetivo para cambiar el turno -->
 		<performgoal name="cambiarTurnoMeta" retry="true" retrydelay="3000" exclude="never">
 			<creationcondition>
 				<!-- Que se active cuando tenga que activarse-->
+        $beliefbase.jugando &amp;&amp;
 				$beliefbase.siguienteTurno == true
 			</creationcondition>
 		</performgoal>
 
-    <!-- Objetivo para cambiar el turno -->		
+    <!-- Objetivo para empezar la partida -->
 		<performgoal name="empezarMeta1" retry="true" retrydelay="30000" exclude="when_succeeded">
 			<creationcondition>
 				<!-- Que se active cuando empezar sea true y que el número de jugadores sea como minimo 2 -->
-				$beliefbase.empezar &amp;&amp; $beliefbase.numJugadores &gt; 1
+        $beliefbase.jugando &amp;&amp;
+				$beliefbase.tiempo-$beliefbase.tiempoInicio &gt; 300 &amp;&amp; $beliefbase.empezar &amp;&amp; $beliefbase.numJugadores &gt; 1
 			</creationcondition>
 		</performgoal>
 
-    <!-- Objetivo para cambiar el turno -->		
-		<performgoal name="empezarMeta2" exclude="when_succeeded">
+    <!-- Objetivo para empezar la partida -->
+		<performgoal name="empezarMeta2" retrydelay="10000" exclude="when_succeeded">
 			<creationcondition>
 				<!-- Que se active cuando empezar sea true y que el número de jugadores sea 6 -->
+        $beliefbase.jugando &amp;&amp;
 				$beliefbase.empezar &amp;&amp; $beliefbase.numJugadores == 6
 			</creationcondition>
 		</performgoal>
@@ -157,6 +180,14 @@
   <!-- PLANES -->
   <plans>
   
+    <!-- Acabar partida -->
+    <plan name="acabarPartida_plan">
+      <body class="AcabarPartidaPlan" />
+      <trigger>
+        <goal ref="acabarPartida"></goal>
+      </trigger>
+    </plan>
+
     <!-- Abrir una puerta -->
     <plan name="abrirPuerta_plan">
       <body class="AbrirPuertaPlan" />
@@ -204,11 +235,11 @@
         <messageevent ref="Request_Cerrar_Puerta" />
       </trigger>
     </plan>
-    
+  
     <!-- Colocar PDI -->
     <plan name="ColocarPuntosInteres">
         <body class="ColocarPuntosInteresPlan" />
-        <trigger>	
+        <trigger>
           <goal ref="colocarPDIMeta"/>
         </trigger>
     </plan>
@@ -297,7 +328,6 @@
     <plan name="empezar_plan">
       <body class="EmpezarPlan" />
       <trigger>
-        <!-- PREGUNTARLE POR ESTO KJASDFKLASHDLKFJASHDKFJHASLDKJFHALSKJDFHLAKSJDFHLKASJDFHLKASJDHFLKASJDHFLKASJDFHLKASJDFHLKASJDFHLKAJSDHFLKAJSDHFLKAJSDHFKAJSDHFLKJASDFHLKJASDHFLKJASDFHJASDGKFHASGDKJFASGDKJFASGJDFAS -->
         <goal ref="empezarMeta1" />
         <goal ref="empezarMeta2" />
       </trigger>
@@ -356,6 +386,19 @@
 
   <!-- EVENTOS -->
   <events>
+
+    <!-- Acabar Partida -->
+    <messageevent name="Inform_Partida_Acabada" direction="send" type="fipa">
+      <parameter name="performative" class="String" direction="fixed">
+        <value>SFipa.INFORM</value>
+      </parameter>
+      <parameter name="language" class="String" direction="fixed">
+        <value>SFipa.NUGGETS_XML</value>
+      </parameter>
+      <parameter name="content-class" class="Class" direction="fixed">
+        <value>ResultadoPartida.class</value>
+      </parameter>
+    </messageevent>
 
     <!-- Abrir puerta -->
     <messageevent name="Request_Abrir_Puerta" direction="receive" type="fipa">
@@ -1095,7 +1138,7 @@
       </parameter>
     </messageevent>
 
-    <messageevent name="Refuse_Eliminada_Materia_Peligrosa" direction="send" type="fipa">
+    <messageevent name="Refuse_Eliminar_Materia_Peligrosa" direction="send" type="fipa">
       <parameter name="performative" class="String" direction="fixed">
         <value>SFipa.REFUSE</value>
       </parameter>
@@ -1103,11 +1146,11 @@
         <value>SFipa.NUGGETS_XML</value>
       </parameter>
       <parameter name="content-class" class="Class" direction="fixed">
-        <value>EliminadaMateriaPeligrosa.class</value>
+        <value>EliminarMateriaPeligrosa.class</value>
       </parameter>
     </messageevent>
 
-    <messageevent name="Failure_Eliminada_Materia_Peligrosa" direction="send" type="fipa">
+    <messageevent name="Failure_Eliminar_Materia_Peligrosa" direction="send" type="fipa">
       <parameter name="performative" class="String" direction="fixed">
         <value>SFipa.FAILURE</value>
       </parameter>
@@ -1115,7 +1158,7 @@
         <value>SFipa.NUGGETS_XML</value>
       </parameter>
       <parameter name="content-class" class="Class" direction="fixed">
-        <value>EliminadaMateriaPeligrosa.class</value>
+        <value>EliminarMateriaPeligrosa.class</value>
       </parameter>
     </messageevent>
 
@@ -1140,7 +1183,7 @@
         <value>SFipa.NUGGETS_XML</value>
       </parameter>
       <parameter name="content-class" class="Class" direction="fixed">
-        <value>MateriaPeligrosaEliminada.class</value>
+        <value>PuntoInteresIdentificado.class</value>
       </parameter>
     </messageevent>
 
@@ -1152,7 +1195,7 @@
         <value>SFipa.NUGGETS_XML</value>
       </parameter>
       <parameter name="content-class" class="Class" direction="fixed">
-        <value>PuntoInteresIdentificado.class</value>
+        <value>IdentificarPuntoInteres.class</value>
       </parameter>
     </messageevent>
 
@@ -1245,6 +1288,18 @@
     <messageevent name="Refuse_Unirse_Partida" direction="send" type="fipa">
       <parameter name="performative" class="String" direction="fixed">
         <value>SFipa.REFUSE</value>
+      </parameter>
+      <parameter name="language" class="String" direction="fixed">
+        <value>SFipa.NUGGETS_XML</value>
+      </parameter>
+      <parameter name="content-class" class="Class" direction="fixed">
+        <value>UnirsePartida.class</value>
+      </parameter>
+    </messageevent>
+
+    <messageevent name="Failure_Unirse_Partida" direction="send" type="fipa">
+      <parameter name="performative" class="String" direction="fixed">
+        <value>SFipa.FAILURE</value>
       </parameter>
       <parameter name="language" class="String" direction="fixed">
         <value>SFipa.NUGGETS_XML</value>

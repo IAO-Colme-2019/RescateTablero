@@ -1,12 +1,12 @@
 package rescate.tablero.planes;
 
-import java.util.ArrayList;
-
+import jadex.adapter.fipa.SFipa;
+import jadex.runtime.IMessageEvent;
 import jadex.runtime.Plan;
-
 import rescate.ontologia.conceptos.Casilla;
 import rescate.ontologia.conceptos.Jugador;
 import rescate.ontologia.conceptos.Tablero;
+import rescate.ontologia.predicados.TurnoAsignado;
 
 public class EmpezarPlan extends Plan {
 
@@ -33,23 +33,19 @@ public class EmpezarPlan extends Plan {
     t = (Tablero) getBeliefbase().getBelief("tablero").getFact();
     t.setMapa(new Casilla[modelo.length][modelo[0].length]);
 
-    // Lista de jugadores
-    ArrayList<Jugador> jugadores = t.getJugadores();
-
     // Inicializacion de los atributos de cada casilla siguendo el modelo que hemos
     // definido
     for (int i = 0; i < modelo.length; i++) {
       for (int j = 0; j < modelo[i].length; j++) {
         t.getMapa()[i][j] = new Casilla();
         t.getMapa()[i][j].setPosicion(new int[] { j, i });
-        Casilla.Conexion[] c = Casilla.Conexion.values();
-        t.getMapa()[i][j].setConexiones(new Casilla.Conexion[] { c[modelo[i][j][0]], c[modelo[i][j][1]], c[modelo[i][j][2]], c[modelo[i][j][3]] });
-        t.getMapa()[i][j].setFlecha(Casilla.Direccion.values()[modelo[i][j][4]]);
+        t.getMapa()[i][j].setConexiones(new int[] { modelo[i][j][0], modelo[i][j][1], modelo[i][j][2], modelo[i][j][3] });
+        t.getMapa()[i][j].setFlecha(modelo[i][j][4]);
         t.getMapa()[i][j].setEsAparcamientoCamion(modelo[i][j][5] == 1);
         t.getMapa()[i][j].setEsAparcamientoAmbulancia(modelo[i][j][6] == 1);
         t.getMapa()[i][j].setHabitacion(modelo[i][j][7]);
-        t.getMapa()[i][j].setTieneFuego(Casilla.Fuego.NADA);
-        t.getMapa()[i][j].setPuntoInteres(Casilla.PuntoInteres.NADA);
+        t.getMapa()[i][j].setTieneFuego(0);
+        t.getMapa()[i][j].setPuntoInteres(0);
       }
     }
 
@@ -60,8 +56,8 @@ public class EmpezarPlan extends Plan {
       int Y = (int) (Math.random() * 6 + 1);
       // Casilla en la posicion X e Y
       Casilla casilla = t.getMapa()[Y][X];
-      if (casilla.tieneFuego() == Casilla.Fuego.NADA) {
-        t.getMapa()[Y][X].setTieneFuego(Casilla.Fuego.FUEGO);
+      if (casilla.tieneFuego() == 0) {
+        t.getMapa()[Y][X].setTieneFuego(2);
         t.getMapa()[Y][X].setTieneFocoCalor(true);
         explosion(X, Y);
       } else {
@@ -81,7 +77,7 @@ public class EmpezarPlan extends Plan {
       int Y = (int) (Math.random() * 6 + 1);
       // Casilla en la posicion X e Y
       Casilla casilla = t.getMapa()[Y][X];
-      if (casilla.tieneFuego() == Casilla.Fuego.NADA)
+      if (casilla.tieneFuego() == 0)
         t.getMapa()[Y][X].setTieneMateriaPeligrosa(true);
       else
         i--;
@@ -131,38 +127,41 @@ public class EmpezarPlan extends Plan {
     }
 
     // Posicion inicial de jugadores
-    ArrayList<Jugador> j = new ArrayList<Jugador>();
-    for (int i = 0; i < jugadores.size(); i++) {
-      Jugador jugador = jugadores.get(i);
+    for (int i = 0; i < t.getJugadores().size(); i++) {
       switch ((int) (Math.random() * 4)) {
         case 0:
-          jugador.setPosicion(new int[] { 6, 0 });
+          t.getJugadores().get(i).setPosicion(new int[] { 6, 0 });
           break;
         case 1:
-          jugador.setPosicion(new int[] { 9, 4 });
+          t.getJugadores().get(i).setPosicion(new int[] { 9, 4 });
           break;
         case 2:
-          jugador.setPosicion(new int[] { 3, 7 });
+          t.getJugadores().get(i).setPosicion(new int[] { 3, 7 });
           break;
         case 3:
-          jugador.setPosicion(new int[] { 0, 3 });
+          t.getJugadores().get(i).setPosicion(new int[] { 0, 3 });
           break;
         default:
           break;
       }
-      jugador.setHabitacion(0);
-      jugador.setLlevandoVictima(Jugador.LlevandoVictima.NO);
-      jugador.setRol(Jugador.Rol.NINGUNO);
-      j.add(jugador);
+      t.getJugadores().get(i).setHabitacion(0);
+      t.getJugadores().get(i).setLlevandoVictima(0);
+      t.getJugadores().get(i).setRol(0);
     }
-
-    // Actualizamos la informacion de los jugadores
-    t.setJugadores(j);
 
     // Actualizamos el belief del tablero
     getBeliefbase().getBelief("tablero").setFact(t);
-    getBeliefbase().getBelief("empezar").setFact(false);
+    getBeliefbase().getBelief("empezar").setFact(false);    
+    getBeliefbase().getBelief("PDITablero").setFact(3);
 
+
+    // Se informa también al jugador al que le toca ahora jugar
+    IMessageEvent respuesta = createMessageEvent("Inform_Turno_Asignado");
+    TurnoAsignado predicado = new TurnoAsignado();
+    predicado.setHabitacion(t.getHabitacion(0));
+    respuesta.setContent(predicado);
+    respuesta.getParameterSet(SFipa.RECEIVERS).addValue(t.getJugadores().get(0).getIdAgente());
+    sendMessage(respuesta);
   }
 
   // Explosion arriba, derecha, abajo e izquierda dada una casilla[X, Y]
@@ -207,7 +206,7 @@ public class EmpezarPlan extends Plan {
       // Si hay obstaculo, se daña y se para
       if (obstaculo(X, Y, direccion)) {
         // Si es una pared
-        if (t.getMapa()[Y][X].getConexiones()[direccion] != Casilla.Conexion.PUERTA_CERRADA) {
+        if (t.getMapa()[Y][X].getConexiones()[direccion] != 2) {
           // Se reduce en uno los cubos de daño
           getBeliefbase().getBelief("cubosDanno").setFact((int) getBeliefbase().getBelief("cubosDanno").getFact() - 1);
         }
@@ -216,15 +215,15 @@ public class EmpezarPlan extends Plan {
         return;
       }
       // Si hay una puerta abierta, se daña y se continua
-      if (t.getMapa()[Y][X].getConexiones()[direccion] == Casilla.Conexion.PUERTA_ABIERTA) {
+      if (t.getMapa()[Y][X].getConexiones()[direccion] == 1) {
         t.getMapa()[Y][X].dannarConexion(direccion);
         t.getMapa()[Y_][X_].dannarConexion(direccion_);
       }
       // Si la nueva casilla esta dentro de los limites
       if (Y_ > -1 && X_ > -1 && Y_ < t.getMapa().length && X_ < t.getMapa()[0].length) {
         // Si no hay fuego, se cambia a fuego y se para
-        if (t.getMapa()[Y_][X_].tieneFuego() != Casilla.Fuego.FUEGO) {
-          t.getMapa()[Y_][X_].setTieneFuego(Casilla.Fuego.FUEGO);
+        if (t.getMapa()[Y_][X_].tieneFuego() != 2) {
+          t.getMapa()[Y_][X_].setTieneFuego(2);
           return;
         }
         // Si hay fuego, se realiza una nueva explosion en la misma direccion
@@ -236,9 +235,9 @@ public class EmpezarPlan extends Plan {
   // Devuelve si hay un obstaculo (pared sin romper o puerta cerrada) en la
   // direccion indicada de una casilla
   private boolean obstaculo(int X, int Y, int direccion) {
-    return t.getMapa()[Y][X].getConexiones()[direccion] == Casilla.Conexion.PUERTA_CERRADA
-        || t.getMapa()[Y][X].getConexiones()[direccion] == Casilla.Conexion.PARED
-        || t.getMapa()[Y][X].getConexiones()[direccion] == Casilla.Conexion.PARED_SEMIRROTA;
+    return t.getMapa()[Y][X].getConexiones()[direccion] == 2
+        || t.getMapa()[Y][X].getConexiones()[direccion] == 3
+        || t.getMapa()[Y][X].getConexiones()[direccion] == 4;
   }
 
   private void ColocarPDI() {
@@ -265,11 +264,11 @@ public class EmpezarPlan extends Plan {
           for (int j = 1; j < t.getMapa()[i].length - 1; j++) {
             // Se encuentra la primera casilla en la que sea viable poner el PDI
             Casilla c_ = t.getMapa()[i][j];
-            if (c_.getPuntoInteres() == Casilla.PuntoInteres.NADA && c_.tieneFuego() != Casilla.Fuego.FUEGO) {
+            if (c_.getPuntoInteres() == 0 && c_.tieneFuego() != 2) {
               // Se coloca el PDI (oculto y cuando se descubra se decidirá si es falsa alarma
               // o víctima)
               System.out.println("[INFO] Se ha colocado un PDI en la casilla[" + c.getPosicion()[0] + ", " + c.getPosicion()[1] + "]");
-              c.setPuntoInteres(Casilla.PuntoInteres.OCULTO);
+              c.setPuntoInteres(1);
               return;
             }
           }
@@ -277,12 +276,12 @@ public class EmpezarPlan extends Plan {
       }
 
       // Se puede colocar...
-      if (c.getPuntoInteres() == Casilla.PuntoInteres.NADA && c.tieneFuego() != Casilla.Fuego.FUEGO) {
+      if (c.getPuntoInteres() == 0 && c.tieneFuego() != 2) {
 
         // Se coloca el PDI (oculto y cuando se descubra se decidirá si es falsa alarma
         // o víctima)
         System.out.println("[INFO] Se ha colocado un PDI en la casilla[" + c.getPosicion()[0] + ", " + c.getPosicion()[1] + "]");
-        c.setPuntoInteres(Casilla.PuntoInteres.OCULTO);
+        c.setPuntoInteres(1);
         break;
 
       }
@@ -292,35 +291,35 @@ public class EmpezarPlan extends Plan {
       else {
         // La nueva casilla es la indica por la flecha de la casilla actual
         switch (c.getFlecha()) {
-          case ARRIBA:
+          case 0:
             Y--;
             break;
-          case ARRIBA_DERECHA:
+          case 1:
             X++;
             Y--;
             break;
-          case DERECHA:
+          case 2:
             X++;
             break;
-          case ABAJO_DERECHA:
+          case 3:
             X++;
             Y++;
             break;
-          case ABAJO:
+          case 4:
             Y++;
             break;
-          case ABAJO_IZQUIERDA:
+          case 5:
             X--;
             Y++;
             break;
-          case IZQUIERDA:
+          case 6:
             X--;
             break;
-          case ARRIBA_IZQUIERDA:
+          case 7:
             X--;
             Y--;
             break;
-          case NADA:
+          case 8:
             break;
         }
         // Se actualiza la casilla
