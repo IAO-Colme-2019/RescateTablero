@@ -2,7 +2,6 @@ package rescate.ontologia.predicados;
 
 import java.util.ArrayList;
 
-import rescate.ontologia.conceptos.Jugador;
 
 public class RolesDisponibles extends Predicado {
 

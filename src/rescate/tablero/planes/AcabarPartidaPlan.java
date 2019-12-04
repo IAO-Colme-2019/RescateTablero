@@ -9,7 +9,7 @@ import jadex.runtime.Plan;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class AcabarPartidaPlan extends Plan {
+public class AcabarPartidaPlan extends Plan {
 
 	@Override
 	public void body() {
@@ -25,7 +25,8 @@ class AcabarPartidaPlan extends Plan {
 
     // Se informa a todos los jugadores de que la partida ha acabado y del resultado
     IMessageEvent respuesta = createMessageEvent("Inform_Partida_Acabada");
-    ResultadoPartida predicado = new ResultadoPartida((salvados > 6) ? 0 : 1);
+    ResultadoPartida predicado = new ResultadoPartida();
+    predicado.setResultado((salvados > 6) ? 0 : 1);
 
     respuesta.setContent(predicado);
 

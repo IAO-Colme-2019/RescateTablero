@@ -1,11 +1,8 @@
 package rescate.tablero.planes;
 
-
 import jadex.adapter.fipa.SFipa;
 import jadex.runtime.IMessageEvent;
 import jadex.runtime.Plan;
-import javafx.application.Application;
-import rescate.GUI.GUI;
 import rescate.ontologia.conceptos.Casilla;
 import rescate.ontologia.conceptos.Jugador;
 import rescate.ontologia.conceptos.Tablero;
@@ -159,17 +156,12 @@ public class EmpezarPlan extends Plan {
 
 
     // Se informa también al jugador al que le toca ahora jugar
-    /*IMessageEvent respuesta = createMessageEvent("Inform_Turno_Asignado");
+    IMessageEvent respuesta = createMessageEvent("Inform_Turno_Asignado");
     TurnoAsignado predicado = new TurnoAsignado();
     predicado.setHabitacion(t.getHabitacion(0));
     respuesta.setContent(predicado);
     respuesta.getParameterSet(SFipa.RECEIVERS).addValue(t.getJugadores().get(0).getIdAgente());
-    sendMessage(respuesta);*/
-
-    GUI gui = GUI.getInstance();
-    gui.t = t;
-    gui.partidaEmpezada = true;
-    gui.show();
+    sendMessage(respuesta);
   }
 
   // Explosion arriba, derecha, abajo e izquierda dada una casilla[X, Y]

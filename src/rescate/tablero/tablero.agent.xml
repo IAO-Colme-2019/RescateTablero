@@ -118,16 +118,6 @@
       <concrete ref="dfcap.df_register" />
     </achievegoalref>
 
-    <!-- Objetivo finalizar partida -->
-    <performgoal name="acabarPartida" exclude="when_succeeded" >
-      <creationcondition>
-        <!-- Que  -->
-        ($beliefbase.victimas &gt; 3) &#124;&#124;
-        ($beliefbase.salvados &gt; 6) &#124;&#124;
-        ($beliefbase.cubosDanno &lt; 1)
-      </creationcondition>
-    </performgoal>
-
     <!-- Colocar PDI -->
     <performgoal name="colocarPDIMeta" retry="true" retrydelay="3000" exclude="never">
         <contextcondition>
