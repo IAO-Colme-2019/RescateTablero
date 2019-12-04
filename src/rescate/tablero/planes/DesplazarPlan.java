@@ -124,10 +124,11 @@ class DesplazarPlan extends Plan {
           getBeliefbase().getBelief("PDIFalsaAlarma").setFact(PDIFalsaAlarma);
           // Se actualiza en la base de creencias el hecho tablero
           getBeliefbase().getBelief("tablero").setFact(t);
-          // Se informa al jugador de que la acción ha sido llevada a cabo
-          // TODO: Enviar habitacion
+          // Se informa al jugador de que la acción ha sido llevada a cabo y se le envia la habitacion en la que está
           IMessageEvent respuesta = createMessageEvent("Inform_Desplazado");
-          respuesta.setContent(new Desplazado());
+          Desplazado predicado = new Desplazado();
+          predicado.setHabitacion(t.getHabitacion(jugador.getHabitacion()));
+          respuesta.setContent(predicado);
           respuesta.getParameterSet(SFipa.RECEIVERS).addValue(idJugador);
           sendMessage(respuesta);
         }
