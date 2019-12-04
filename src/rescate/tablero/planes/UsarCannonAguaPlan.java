@@ -47,7 +47,9 @@ class UsarCannonDeAguaPlan extends Plan {
     // Si el jugador esta subido al camion
     else {
       // Suficientes PA
-      if (jugador.getPuntosAccion() > 4 || (jugador.getRol() == Jugador.Rol.CONDUCTOR && jugador.getPuntosAccion() > 2)) {
+      if (jugador.getPuntosAccion() > ((jugador.getRol() == Jugador.Rol.CONDUCTOR) ? 2 : 4)) {
+        // Se consume el PA
+        jugador.setPuntosAccion(jugador.getPuntosAccion() - ((jugador.getRol() == Jugador.Rol.CONDUCTOR) ? 2 : 4));
         // Se tiran los dados
         int [] posicion = tirarDados(); 
         // Preguntamos al conductor de ambualncia si quiere volver a tirar los dados 
