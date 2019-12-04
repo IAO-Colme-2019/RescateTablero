@@ -164,7 +164,8 @@ public class EmpezarPlan extends Plan {
 
     // Actualizamos el belief del tablero
     getBeliefbase().getBelief("tablero").setFact(t);
-    getBeliefbase().getBelief("empezar").setFact(false);
+    getBeliefbase().getBelief("empezar").setFact(false);    
+    getBeliefbase().getBelief("PDITablero").setFact(3);
 
 
     // Se informa también al jugador al que le toca ahora jugar
