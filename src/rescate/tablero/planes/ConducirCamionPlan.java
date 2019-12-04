@@ -43,7 +43,7 @@ public class ConducirCamionPlan extends Plan {
         boolean desplazado = false;
         // Dependiendo del destino...
         switch(accion.getDestino()) {
-          case ARRIBA:
+          case 0:
             // No puede conducir desde ABAJO
             if (jugador.getPosicion()[1] != t.getMapa().length - 1) {
               // Vienen de la IZQUIERDA
@@ -69,7 +69,7 @@ public class ConducirCamionPlan extends Plan {
               desplazado = true;
             }
             break;
-          case DERECHA:
+          case 1:
             // No puede conducir desde IZQUIERDA
             if (jugador.getPosicion()[0] != 0) {
               // Vienen de ARRIBA
@@ -95,7 +95,7 @@ public class ConducirCamionPlan extends Plan {
               desplazado = true;
             }
             break;
-          case ABAJO:
+          case 2:
             // No puede conducir desde ARRIBA
             if (jugador.getPosicion()[1] != 0) {
               // Vienen de la IZQUIERDA
@@ -121,7 +121,7 @@ public class ConducirCamionPlan extends Plan {
               desplazado = true;
             }
             break;
-          case IZQUIERDA:
+          case 3:
             // No puede conducir desde DERECHA
             if (jugador.getPosicion()[0] != t.getMapa().length - 1) {
               // Vienen de ARRIBA

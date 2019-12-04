@@ -25,19 +25,19 @@ public class CambiarTurnoPlan extends Plan {
     Jugador jugador = t.getJugadores().get(indiceProximoJugador);
 
     //Se añaden los PA genericos y se restauran los de clase
-    if (jugador.getRol() == Jugador.Rol.ESPUMA_IGNIFUGA) {
+    if (jugador.getRol() == 4) {
       jugador.setPuntosAccion(jugador.getPuntosAccion() + 3);
       jugador.setPuntosAccionExtincion(3);
     }
-    else if (jugador.getRol() == Jugador.Rol.GENERALISTA) {
+    else if (jugador.getRol() == 6) {
       jugador.setPuntosAccion(jugador.getPuntosAccion() + 5);
     }
     else{
       jugador.setPuntosAccion(jugador.getPuntosAccion() + 4);
-      if (jugador.getRol() == Jugador.Rol.JEFE) {
+      if (jugador.getRol() == 2) {
         jugador.setPuntosAccionMando(2);
       }
-      else if (jugador.getRol() == Jugador.Rol.RESCATES) {
+      else if (jugador.getRol() == 7) {
         jugador.setPuntosAccionMovimiento(3);
       }
     }

@@ -32,9 +32,9 @@ public class CogerVictimaPlan extends Plan {
     Casilla c = t.getMapa()[jugador.getPosicion()[1]][jugador.getPosicion()[0]];
 
     // Si hay una víctima en la casilla
-    if (c.getPuntoInteres() == Casilla.PuntoInteres.VICTIMA || c.getPuntoInteres() == Casilla.PuntoInteres.VICTIMA_CURADA) {
+    if (c.getPuntoInteres() == 2 || c.getPuntoInteres() == 3) {
       // Si el jugador ya esta llevando algo
-      if (jugador.llevandoVictima() != Jugador.LlevandoVictima.NO || jugador.llevandoMateriaPeligrosa()) {
+      if (jugador.llevandoVictima() != 0 || jugador.llevandoMateriaPeligrosa()) {
         System.out.println("[RECHAZADO] El jugador con id " + idJugador + " ya esta llevando algo");
         // Se rechaza la petición de acción del jugador
         IMessageEvent respuesta = createMessageEvent("Refuse_Coger_Victima");
@@ -46,9 +46,9 @@ public class CogerVictimaPlan extends Plan {
       else {
         System.out.println("[INFO] El jugador con id " + idJugador + " ahora lleva una victima");
         // El jugador coge a la victima
-        jugador.setLlevandoVictima((c.getPuntoInteres() == Casilla.PuntoInteres.VICTIMA) ? Jugador.LlevandoVictima.SI : Jugador.LlevandoVictima.CURADA);
+        jugador.setLlevandoVictima((c.getPuntoInteres() == 2) ? 1 : 2);
         // Se elimina el PDI de la casilla (aunque no se colocara ninguno hasta que se deje la victima en el exterior)
-        c.setPuntoInteres(Casilla.PuntoInteres.NADA);
+        c.setPuntoInteres(0);
         // Se actualiza en la base de creencias el hecho tablero
         getBeliefbase().getBelief("tablero").setFact(t);
         // Se informa al jugador de que la acción ha sido llevada a cabo

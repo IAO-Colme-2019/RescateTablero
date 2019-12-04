@@ -52,6 +52,13 @@
       </trigger>
     </plan>
 
+    
+    <plan name="Desplazarse">
+      <body class="DesplazarsePlan" />
+      <trigger>
+        <messageevent ref="Inform_Turno_Asignado" />
+      </trigger>
+    </plan>
   </plans>
 
   <events>
@@ -105,7 +112,66 @@
       </parameter>
     </messageevent>
 
+<!-- Desplazar jugador -->
+    <messageevent name="Request_Desplazar" direction="send" type="fipa">
+      <parameter name="performative" class="String" direction="fixed">
+        <value>SFipa.REQUEST</value>
+      </parameter>
+      <parameter name="language" class="String" direction="fixed">
+        <value>SFipa.NUGGETS_XML</value>
+      </parameter>
+      <parameter name="content-class" class="Class" direction="fixed">
+        <value>Desplazar.class</value>
+      </parameter>
+    </messageevent>
 
+    <messageevent name="Inform_Desplazado" direction="receive" type="fipa">
+      <parameter name="performative" class="String" direction="fixed">
+        <value>SFipa.INFORM</value>
+      </parameter>
+      <parameter name="language" class="String" direction="fixed">
+        <value>SFipa.NUGGETS_XML</value>
+      </parameter>
+      <parameter name="content-class" class="Class" direction="fixed">
+        <value>Desplazado.class</value>
+      </parameter>
+    </messageevent>
+
+    <messageevent name="Refuse_Desplazar" direction="receive" type="fipa">
+      <parameter name="performative" class="String" direction="fixed">
+        <value>SFipa.REFUSE</value>
+      </parameter>
+      <parameter name="language" class="String" direction="fixed">
+        <value>SFipa.NUGGETS_XML</value>
+      </parameter>
+      <parameter name="content-class" class="Class" direction="fixed">
+        <value>Desplazar.class</value>
+      </parameter>
+    </messageevent>
+
+    <messageevent name="Failure_Desplazar" direction="receive" type="fipa">
+      <parameter name="performative" class="String" direction="fixed">
+        <value>SFipa.FAILURE</value>
+      </parameter>
+      <parameter name="language" class="String" direction="fixed">
+        <value>SFipa.NUGGETS_XML</value>
+      </parameter>
+      <parameter name="content-class" class="Class" direction="fixed">
+        <value>Desplazar.class</value>
+      </parameter>
+    </messageevent>
+  
+  <messageevent name="Inform_Turno_Asignado" direction="receive" type="fipa">
+      <parameter name="performative" class="String" direction="fixed">
+        <value>SFipa.INFORM</value>
+      </parameter>
+      <parameter name="language" class="String" direction="fixed">
+        <value>SFipa.NUGGETS_XML</value>
+      </parameter>
+      <parameter name="content-class" class="Class" direction="fixed">
+        <value>TurnoAsignado.class</value>
+      </parameter>
+    </messageevent>
   </events>
 
   <configurations>

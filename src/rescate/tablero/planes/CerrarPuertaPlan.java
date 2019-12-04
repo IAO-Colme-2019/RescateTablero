@@ -32,7 +32,7 @@ public class CerrarPuertaPlan extends Plan {
     Casilla c = t.getMapa()[jugador.getPosicion()[1]][jugador.getPosicion()[0]];
 
     // Si la conexión no es una puerta abierta...
-		if (c.getConexiones()[accion.getConexion()] != Casilla.Conexion.PUERTA_ABIERTA) {
+		if (c.getConexiones()[accion.getConexion()] != 1) {
       System.out.println("[FALLO] No hay una puerta abierta en la conexión indicada de la casilla del jugador");
       // Se rechaza la petición de acción del jugador
       IMessageEvent respuesta = createMessageEvent("Failure_Cerrar_Puerta");
@@ -55,29 +55,29 @@ public class CerrarPuertaPlan extends Plan {
       else {
         System.out.println("[INFO] El jugador con id " + idJugador + " ha cerrado una puerta en la casilla[" + c.getPosicion()[0] + ", " + c.getPosicion()[1] + "]");
         // Se modifica la conexion a puerta abierta
-        c.getConexiones()[accion.getConexion()] = Casilla.Conexion.PUERTA_CERRADA;
+        c.getConexiones()[accion.getConexion()] = 2;
         // Casilla colindante (donde también esta la referencia a la puerta abierta y hay que cerrarla)
         Casilla colindante = null;
         switch (accion.getConexion()) {
           // Arriba
           case 0:
             colindante = t.getMapa()[c.getPosicion()[1] - 1][c.getPosicion()[0]];
-            colindante.getConexiones()[2] = Casilla.Conexion.PUERTA_CERRADA;
+            colindante.getConexiones()[2] = 2;
             break;
           // Derecha
           case 1:
             colindante = t.getMapa()[c.getPosicion()[1]][c.getPosicion()[0] + 1];
-            colindante.getConexiones()[3] = Casilla.Conexion.PUERTA_CERRADA;
+            colindante.getConexiones()[3] = 2;
             break;
           // Abajo
           case 2:
             colindante = t.getMapa()[c.getPosicion()[1] + 1][c.getPosicion()[0]];
-            colindante.getConexiones()[0] = Casilla.Conexion.PUERTA_CERRADA;
+            colindante.getConexiones()[0] = 2;
             break;
           // Izquierda
           case 3:
             colindante = t.getMapa()[c.getPosicion()[1]][c.getPosicion()[0] - 1];
-            colindante.getConexiones()[1] = Casilla.Conexion.PUERTA_CERRADA;
+            colindante.getConexiones()[1] = 2;
             break;
           // ...
           default:

@@ -37,19 +37,19 @@ public class DesplazarPlan extends Plan {
     boolean obstaculo = false;
 
     switch(accion.getDireccion()) {
-      case ARRIBA:
+      case 0:
         obstaculo = hayObstaculo(c.getConexiones()[0]);
         destino = t.getMapa()[c.getPosicion()[1] - 1][c.getPosicion()[0]];
         break;
-      case DERECHA:
+      case 1:
         obstaculo = hayObstaculo(c.getConexiones()[1]);
         destino = t.getMapa()[c.getPosicion()[1]][c.getPosicion()[0] + 1];
         break;
-      case ABAJO:
+      case 2:
         obstaculo = hayObstaculo(c.getConexiones()[2]);
         destino = t.getMapa()[c.getPosicion()[1] + 1][c.getPosicion()[0]];
         break;
-      case IZQUIERDA:
+      case 3:
         obstaculo = hayObstaculo(c.getConexiones()[3]);
         destino = t.getMapa()[c.getPosicion()[1]][c.getPosicion()[0] - 1];
         break;
@@ -70,7 +70,7 @@ public class DesplazarPlan extends Plan {
       int PA = puntosAccionNecesarios(destino, jugador);
       if (jugador.getPuntosAccion() + jugador.getPuntosAccionMovimiento() >= PA) {
         // La casilla destino tiene FUEGO y se está llevando una víctima
-        if (destino.tieneFuego() == Casilla.Fuego.FUEGO && (jugador.llevandoVictima() != Jugador.LlevandoVictima.NO || jugador.llevandoMateriaPeligrosa())) {
+        if (destino.tieneFuego() == 2 && (jugador.llevandoVictima() != 0 || jugador.llevandoMateriaPeligrosa())) {
           System.out.println("[RECHAZADO] Desde la casilla del jugador con id " + idJugador + " en dirección " + accion.getDireccion() + " hay fuego y el jugador lleva una victima/mat. peligrosa");
           // Se rechaza la petición de acción del jugador
           IMessageEvent respuesta = createMessageEvent("Refuse_Desplazar");
@@ -98,23 +98,23 @@ public class DesplazarPlan extends Plan {
           int PDITablero = (int) getBeliefbase().getBelief("PDITablero").getFact();
           int PDIVictima = (int) getBeliefbase().getBelief("PDIVictima").getFact();
           int PDIFalsaAlarma = (int) getBeliefbase().getBelief("PDIFalsaAlarma").getFact();
-          if (destino.getPuntoInteres() == Casilla.PuntoInteres.OCULTO) {
+          if (destino.getPuntoInteres() == 1) {
             // Si no queda de un tipo, se coloca del otro...
             if (PDIVictima == 0) {
-              destino.setPuntoInteres(Casilla.PuntoInteres.NADA);
+              destino.setPuntoInteres(0);
               PDIFalsaAlarma--;
               PDITablero--;
             } else if (PDIFalsaAlarma == 0) {
-              destino.setPuntoInteres(Casilla.PuntoInteres.VICTIMA);
+              destino.setPuntoInteres(2);
               PDIVictima--;
             }
             // Si quedan de los dos tipos, de manera aleatoria...
             else if (Math.random() < 0.5) {
-              destino.setPuntoInteres(Casilla.PuntoInteres.NADA);
+              destino.setPuntoInteres(0);
               PDIFalsaAlarma--;
               PDITablero--;
             } else {
-              destino.setPuntoInteres(Casilla.PuntoInteres.VICTIMA);
+              destino.setPuntoInteres(2);
               PDIVictima--;
             }
           }
@@ -146,12 +146,12 @@ public class DesplazarPlan extends Plan {
 
   }
 
-  public static boolean hayObstaculo(Casilla.Conexion con) {
-    return con == Casilla.Conexion.PUERTA_CERRADA || con == Casilla.Conexion.PARED || con == Casilla.Conexion.PARED_SEMIRROTA;
+  public static boolean hayObstaculo(int con) {
+    return con == 2 || con == 3 || con == 4;
   }
 
   public static int puntosAccionNecesarios(Casilla destino, Jugador j) {
-    if (destino.tieneFuego() == Casilla.Fuego.FUEGO || j.llevandoVictima() == Jugador.LlevandoVictima.SI || j.llevandoMateriaPeligrosa()) {
+    if (destino.tieneFuego() == 2 || j.llevandoVictima() == 1 || j.llevandoMateriaPeligrosa()) {
       return 2;
     }
     return 1;

@@ -32,7 +32,7 @@ public class ApagarFuegoPlan extends Plan {
     Casilla c = t.getMapa()[jugador.getPosicion()[1]][jugador.getPosicion()[0]];
 
     // Si la casilla no tiene fuego...
-    if (accion.getCasilla().tieneFuego() != Casilla.Fuego.FUEGO && accion.getCasilla().tieneFuego() != Casilla.Fuego.HUMO) {
+    if (accion.getCasilla().tieneFuego() != 2 && accion.getCasilla().tieneFuego() != 1) {
       System.out.println("[FALLO] La casilla no tiene un fuego activo");
       // Se rechaza la petición de acción del jugador
       IMessageEvent respuesta = createMessageEvent("Failure_Apagar_Fuego");
@@ -52,7 +52,7 @@ public class ApagarFuegoPlan extends Plan {
     // Si las condiciones permiten extinguir el fuego...
     else {
       // No hay PA suficientes para realizar la acción (en función del rol)
-      if (jugador.getPuntosAccion() + jugador.getPuntosAccionExtincion() < ((jugador.getRol() == Jugador.Rol.SANITARIO) ? 2 : 1)) {
+      if (jugador.getPuntosAccion() + jugador.getPuntosAccionExtincion() < ((jugador.getRol() == 1) ? 2 : 1)) {
         System.out.println("[RECHAZADO] El jugador con id " + idJugador + " no tiene suficientes PA para apagar un fuego");
         // Se rechaza la petición de acción del jugador
         IMessageEvent respuesta = createMessageEvent("Refuse_Apagar_Fuego");
@@ -64,13 +64,13 @@ public class ApagarFuegoPlan extends Plan {
       else {
         System.out.println("[INFO] Se ha apagado un fuego o humo en la casilla[" + accion.getCasilla().getPosicion()[0] + ", " + accion.getCasilla().getPosicion()[1] + "]");
         // Se apaga el fuego (pasa a humo)
-        accion.getCasilla().setTieneFuego(Casilla.Fuego.values()[accion.getCasilla().tieneFuego().ordinal() - 1]);
+        accion.getCasilla().setTieneFuego(accion.getCasilla().tieneFuego() - 1);
         // Se actualiza el jugador (consumo de PA)
         if (jugador.getPuntosAccionExtincion() > 0) {
           jugador.setPuntosAccionExtincion(jugador.getPuntosAccionExtincion() - 1);
         }
-        else if (jugador.getPuntosAccion() > ((jugador.getRol() == Jugador.Rol.SANITARIO) ? 1 : 0)) {
-          jugador.setPuntosAccion(jugador.getPuntosAccion() - ((jugador.getRol() == Jugador.Rol.SANITARIO) ? 2 : 1));
+        else if (jugador.getPuntosAccion() > ((jugador.getRol() == 1) ? 1 : 0)) {
+          jugador.setPuntosAccion(jugador.getPuntosAccion() - ((jugador.getRol() == 1) ? 2 : 1));
         }
         // Se actualiza la casilla sobre la que se ha realizado la apertura de la puerta
         t.setCasilla(accion.getCasilla().getPosicion()[1], accion.getCasilla().getPosicion()[0], accion.getCasilla());

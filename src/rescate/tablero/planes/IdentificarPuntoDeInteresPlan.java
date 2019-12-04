@@ -34,7 +34,7 @@ public class IdentificarPuntoDeInteresPlan extends Plan {
     Jugador jugador = t.getJugador(idJugador);
 
     // Si no es un PDI oculto
-    if (accion.getCasilla().getPuntoInteres() != Casilla.PuntoInteres.OCULTO) {
+    if (accion.getCasilla().getPuntoInteres() != 1) {
       System.out.println("[FALLO] El jugador con id " + idJugador + " no está en una casilla con PDI oculto");
       // Se rechaza la petición de acción del jugador
       IMessageEvent respuesta = createMessageEvent("Failure_Identificar_PDI");
@@ -43,7 +43,7 @@ public class IdentificarPuntoDeInteresPlan extends Plan {
       sendMessage(respuesta);
     }
     // Si el jugador no tiene rol EXP en IMG
-    else if (jugador.getRol() != Jugador.Rol.EXPERTO_EN_IMAGENES){
+    else if (jugador.getRol() != 3){
       System.out.println("[FALLO] El jugador con id " + idJugador + " no tiene rol EXPERTO EN IMAGENES");
       // Se rechaza la petición de acción del jugador
       IMessageEvent respuesta = createMessageEvent("Failure_Identificar_PDI");
@@ -59,23 +59,23 @@ public class IdentificarPuntoDeInteresPlan extends Plan {
         // Si no queda de un tipo, se coloca del otro...
         PuntoInteresIdentificado predicado = new PuntoInteresIdentificado();
         if (PDIVictima == 0) {
-          accion.getCasilla().setPuntoInteres(Casilla.PuntoInteres.NADA);
+          accion.getCasilla().setPuntoInteres(0);
           predicado.setVictima(false);
           PDIFalsaAlarma--;
           PDITablero--;
         } else if (PDIFalsaAlarma == 0) {
-          accion.getCasilla().setPuntoInteres(Casilla.PuntoInteres.VICTIMA);
+          accion.getCasilla().setPuntoInteres(2);
           predicado.setVictima(true);
           PDIVictima--;
         }
         // Si quedan de los dos tipos, de manera aleatoria...
         else if (Math.random() < 0.5) {
-          accion.getCasilla().setPuntoInteres(Casilla.PuntoInteres.NADA);
+          accion.getCasilla().setPuntoInteres(0);
           predicado.setVictima(false);
           PDIFalsaAlarma--;
           PDITablero--;
         } else {
-          accion.getCasilla().setPuntoInteres(Casilla.PuntoInteres.VICTIMA);
+          accion.getCasilla().setPuntoInteres(2);
           predicado.setVictima(true);
           PDIVictima--;
         }

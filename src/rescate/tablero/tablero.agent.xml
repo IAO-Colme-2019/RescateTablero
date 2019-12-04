@@ -21,7 +21,6 @@
 
   <!-- CREENCIAS -->
   <beliefs>
-
     <!-- A quien le toca actuar -->
     <belief name="turno" class="int">
       <fact>0</fact>

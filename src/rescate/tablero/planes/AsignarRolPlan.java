@@ -29,9 +29,9 @@ public class AsignarRolPlan extends Plan {
     ElegirRol accion = (ElegirRol) peticion.getContent();
 
     // Se identifican los roles disponibles y...
-    ArrayList<Jugador.Rol> roles = new ArrayList<Jugador.Rol>();
-    Collections.addAll(roles, Jugador.Rol.values());
-    roles.remove(Jugador.Rol.NINGUNO);
+    ArrayList<Integer> roles = new ArrayList<Integer>();
+    Collections.addAll(roles, 0, 1, 2, 3, 4, 5, 6, 7, 8);
+    roles.remove(0);
     // ...se encuentra en la lista de jugadores del tablero el jugador con id igual al de la petición
     Jugador jugador = null;
     for (int i = 0; i < t.getJugadores().size(); i++) {
@@ -42,12 +42,12 @@ public class AsignarRolPlan extends Plan {
     }
 
     // PA suficientes (no necesario si no tiene ningun rol previamente)
-    if (jugador.getRol() == Jugador.Rol.NINGUNO || (jugador.getRol() != Jugador.Rol.NINGUNO && jugador.getPuntosAccion() > 1)) {
+    if (jugador.getRol() == 0 || (jugador.getRol() != 0 && jugador.getPuntosAccion() > 1)) {
       // Si dentro de los roles disponibles está el que quiere el jugador...
       if (roles.contains(accion.getRol())) {
         System.out.println("[INFO] El jugador con id " + idJugador + " cambia al rol " + accion.getRol());
         // Se reducen los PA si es necesario
-        if (jugador.getRol() != Jugador.Rol.NINGUNO) {
+        if (jugador.getRol() != 0) {
           jugador.setPuntosAccion(jugador.getPuntosAccion() - 2);
         }
         // Se actualiza el rol del jugador
