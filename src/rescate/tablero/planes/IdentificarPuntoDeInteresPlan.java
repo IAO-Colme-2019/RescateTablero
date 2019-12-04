@@ -8,7 +8,7 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class IdentificarPuntoDeInteresPlan extends Plan {
+public class IdentificarPuntoDeInteresPlan extends Plan {
 
   @Override
   public void body() {

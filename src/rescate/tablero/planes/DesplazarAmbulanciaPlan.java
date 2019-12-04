@@ -10,7 +10,7 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class DesplazarAmbulanciaPlan extends Plan {
+public class DesplazarAmbulanciaPlan extends Plan {
 
   public enum Aparcamiento {
     ARRIBA, DERECHA, ABAJO, IZQUIERDA

@@ -8,7 +8,7 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class CogerVictimaPlan extends Plan {
+public class CogerVictimaPlan extends Plan {
 
 	@Override
 	public void body() {

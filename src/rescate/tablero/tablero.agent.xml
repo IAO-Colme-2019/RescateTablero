@@ -1094,7 +1094,7 @@
       </parameter>
     </messageevent>
 
-    <messageevent name="Refuse_Eliminada_Materia_Peligrosa" direction="send" type="fipa">
+    <messageevent name="Refuse_Eliminar_Materia_Peligrosa" direction="send" type="fipa">
       <parameter name="performative" class="String" direction="fixed">
         <value>SFipa.REFUSE</value>
       </parameter>
@@ -1102,11 +1102,11 @@
         <value>SFipa.NUGGETS_XML</value>
       </parameter>
       <parameter name="content-class" class="Class" direction="fixed">
-        <value>EliminadaMateriaPeligrosa.class</value>
+        <value>EliminarMateriaPeligrosa.class</value>
       </parameter>
     </messageevent>
 
-    <messageevent name="Failure_Eliminada_Materia_Peligrosa" direction="send" type="fipa">
+    <messageevent name="Failure_Eliminar_Materia_Peligrosa" direction="send" type="fipa">
       <parameter name="performative" class="String" direction="fixed">
         <value>SFipa.FAILURE</value>
       </parameter>
@@ -1114,7 +1114,7 @@
         <value>SFipa.NUGGETS_XML</value>
       </parameter>
       <parameter name="content-class" class="Class" direction="fixed">
-        <value>EliminadaMateriaPeligrosa.class</value>
+        <value>EliminarMateriaPeligrosa.class</value>
       </parameter>
     </messageevent>
 
@@ -1139,7 +1139,7 @@
         <value>SFipa.NUGGETS_XML</value>
       </parameter>
       <parameter name="content-class" class="Class" direction="fixed">
-        <value>MateriaPeligrosaEliminada.class</value>
+        <value>PuntoInteresIdentificado.class</value>
       </parameter>
     </messageevent>
 
@@ -1151,7 +1151,7 @@
         <value>SFipa.NUGGETS_XML</value>
       </parameter>
       <parameter name="content-class" class="Class" direction="fixed">
-        <value>PuntoInteresIdentificado.class</value>
+        <value>IdentificarPuntoInteres.class</value>
       </parameter>
     </messageevent>
 
@@ -1244,6 +1244,18 @@
     <messageevent name="Refuse_Unirse_Partida" direction="send" type="fipa">
       <parameter name="performative" class="String" direction="fixed">
         <value>SFipa.REFUSE</value>
+      </parameter>
+      <parameter name="language" class="String" direction="fixed">
+        <value>SFipa.NUGGETS_XML</value>
+      </parameter>
+      <parameter name="content-class" class="Class" direction="fixed">
+        <value>UnirsePartida.class</value>
+      </parameter>
+    </messageevent>
+
+    <messageevent name="Failure_Unirse_Partida" direction="send" type="fipa">
+      <parameter name="performative" class="String" direction="fixed">
+        <value>SFipa.FAILURE</value>
       </parameter>
       <parameter name="language" class="String" direction="fixed">
         <value>SFipa.NUGGETS_XML</value>

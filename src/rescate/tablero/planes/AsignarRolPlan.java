@@ -11,7 +11,7 @@ import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.RolElegido;
 import rescate.ontologia.predicados.RolesDisponibles;
 
-class AsignarRolPlan extends Plan {
+public class AsignarRolPlan extends Plan {
 
   @Override
   public void body() {

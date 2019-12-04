@@ -8,7 +8,7 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class CerrarPuertaPlan extends Plan {
+public class CerrarPuertaPlan extends Plan {
 
 	@Override
 	public void body() {

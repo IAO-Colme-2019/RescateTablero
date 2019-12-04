@@ -8,7 +8,7 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class DejarMateriaPeligrosaPlan extends Plan {
+public class DejarMateriaPeligrosaPlan extends Plan {
 
 	@Override
 	public void body() {

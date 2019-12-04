@@ -56,7 +56,8 @@
 
   <events>
 
-    <messageevent name="RequestUnirsePartidaMsg" direction="send" type="fipa">
+    <!-- Unirse partida -->
+    <messageevent name="Request_Unirse_Partida" direction="send" type="fipa">
       <parameter name="performative" class="String" direction="fixed">
         <value>SFipa.REQUEST</value>
       </parameter>
@@ -64,33 +65,46 @@
         <value>SFipa.NUGGETS_XML</value>
       </parameter>
       <parameter name="content-class" class="Class" direction="fixed">
-        <value>Unirse_Partida.class</value>
+        <value>UnirsePartida.class</value>
       </parameter>
     </messageevent>
-
-    <messageevent name="inform_unido" direction="receive" type="fipa">
+    
+    <messageevent name="Inform_Jugador_Unido" direction="receive" type="fipa">
       <parameter name="performative" class="String" direction="fixed">
         <value>SFipa.INFORM</value>
       </parameter>
-    </messageevent>
-
-    <messageevent name="failure_unido" direction="receive" type="fipa">
-      <parameter name="performative" class="String" direction="fixed">
-        <value>SFipa.FAILURE</value>
+      <parameter name="language" class="String" direction="fixed">
+        <value>SFipa.NUGGETS_XML</value>
+      </parameter>
+      <parameter name="content-class" class="Class" direction="fixed">
+        <value>JugadorUnido.class</value>
       </parameter>
     </messageevent>
-
-    <messageevent name="refuse_unido" direction="receive" type="fipa">
+    
+    <messageevent name="Refuse_Unirse_Partida" direction="receive" type="fipa">
       <parameter name="performative" class="String" direction="fixed">
         <value>SFipa.REFUSE</value>
       </parameter>
-    </messageevent>
-
-    <messageevent name="agree_unido" direction="receive" type="fipa">
-      <parameter name="performative" class="String" direction="fixed">
-        <value>SFipa.AGREE</value>
+      <parameter name="language" class="String" direction="fixed">
+        <value>SFipa.NUGGETS_XML</value>
+      </parameter>
+      <parameter name="content-class" class="Class" direction="fixed">
+        <value>UnirsePartida.class</value>
       </parameter>
     </messageevent>
+
+    <messageevent name="Failure_Unirse_Partida" direction="receive" type="fipa">
+      <parameter name="performative" class="String" direction="fixed">
+        <value>SFipa.FAILURE</value>
+      </parameter>
+      <parameter name="language" class="String" direction="fixed">
+        <value>SFipa.NUGGETS_XML</value>
+      </parameter>
+      <parameter name="content-class" class="Class" direction="fixed">
+        <value>UnirsePartida.class</value>
+      </parameter>
+    </messageevent>
+
 
   </events>
 

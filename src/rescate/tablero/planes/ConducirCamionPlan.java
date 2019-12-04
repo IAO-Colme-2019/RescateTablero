@@ -8,7 +8,7 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class ConducirCamionPlan extends Plan {
+public class ConducirCamionPlan extends Plan {
 
   @Override
   public void body() {

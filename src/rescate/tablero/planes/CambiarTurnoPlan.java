@@ -7,7 +7,7 @@ import jadex.runtime.Plan;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class CambiarTurnoPlan extends Plan {
+public class CambiarTurnoPlan extends Plan {
 
 	@Override
 	public void body() {

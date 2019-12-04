@@ -8,7 +8,7 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class DannarParedPlan extends Plan {
+public class DannarParedPlan extends Plan {
 
   @Override
   public void body() {

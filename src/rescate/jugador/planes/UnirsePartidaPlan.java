@@ -47,7 +47,7 @@ public class UnirsePartidaPlan extends Plan {
       // Solicitud unirse
       UnirsePartida accion = new UnirsePartida();
 
-      IMessageEvent msgsend = createMessageEvent("RequestUnirsePartidaMsg");
+      IMessageEvent msgsend = createMessageEvent("Request_Unirse_Partida");
       msgsend.setContent(accion);
       msgsend.getParameterSet(SFipa.RECEIVERS).addValue(tablero);
 
