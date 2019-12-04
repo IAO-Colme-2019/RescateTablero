@@ -89,7 +89,7 @@ class CerrarPuertaPlan extends Plan {
         getBeliefbase().getBelief("tablero").setFact(t);
         // Se informa al jugador de que la acción ha sido llevada a cabo
         IMessageEvent respuesta = createMessageEvent("Inform_Puerta_Cerrada");
-        respuesta.setContent(new PuertaAbierta());
+        respuesta.setContent(new PuertaCerrada());
         respuesta.getParameterSet(SFipa.RECEIVERS).addValue(idJugador);
         sendMessage(respuesta);
       }
