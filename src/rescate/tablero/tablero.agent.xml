@@ -101,6 +101,14 @@
       <fact>true</fact>
     </belief>
 
+    <belief name="tiempoInicio" class="int">
+      <fact> (int)(System.currentTimeMillis()/1000) </fact>
+    </belief>
+
+    <belief name="tiempo" class="int" updaterate="750">  
+      <fact> (int)(System.currentTimeMillis()/1000) </fact>
+    </belief>
+
   </beliefs>
 
   <!-- METAS -->
@@ -110,6 +118,16 @@
       <concrete ref="dfcap.df_register" />
     </achievegoalref>
 
+    <!-- Objetivo finalizar partida -->
+    <performgoal name="acabarPartida" exclude="when_succeeded" >
+      <creationcondition>
+        <!-- Que  -->
+        ($beliefbase.victimas &gt; 3) &#124;&#124;
+        ($beliefbase.salvados &gt; 6) &#124;&#124;
+        ($beliefbase.cubosDanno &lt; 1)
+      </creationcondition>
+    </performgoal>
+
     <!-- Colocar PDI -->
     <performgoal name="colocarPDIMeta" retry="true" retrydelay="3000" exclude="never">
         <contextcondition>
@@ -118,7 +136,7 @@
         </contextcondition>
     </performgoal>
 
-    <!-- Objetivo para propagar el fuego -->		
+    <!-- Objetivo para propagar el fuego -->
 		<performgoal name="propagarFuegoMeta" retry="true" retrydelay="3000" exclude="never">
 			<creationcondition>
 				<!-- Que se active cuando tenga que activarse-->
@@ -126,7 +144,7 @@
 			</creationcondition>
 		</performgoal>
 
-    <!-- Objetivo para cambiar el turno -->		
+    <!-- Objetivo para cambiar el turno -->
 		<performgoal name="cambiarTurnoMeta" retry="true" retrydelay="3000" exclude="never">
 			<creationcondition>
 				<!-- Que se active cuando tenga que activarse-->
@@ -134,15 +152,15 @@
 			</creationcondition>
 		</performgoal>
 
-    <!-- Objetivo para cambiar el turno -->		
+    <!-- Objetivo para empezar la partida -->
 		<performgoal name="empezarMeta1" retry="true" retrydelay="30000" exclude="when_succeeded">
 			<creationcondition>
 				<!-- Que se active cuando empezar sea true y que el número de jugadores sea como minimo 2 -->
-				$beliefbase.empezar &amp;&amp; $beliefbase.numJugadores &gt; 1
+				$beliefbase.tiempo-$beliefbase.tiempoInicio &gt; 300 &amp;&amp; $beliefbase.empezar &amp;&amp; $beliefbase.numJugadores &gt; 1
 			</creationcondition>
 		</performgoal>
 
-    <!-- Objetivo para cambiar el turno -->		
+    <!-- Objetivo para empezar la partida -->
 		<performgoal name="empezarMeta2" exclude="when_succeeded">
 			<creationcondition>
 				<!-- Que se active cuando empezar sea true y que el número de jugadores sea 6 -->
@@ -156,6 +174,14 @@
   <!-- PLANES -->
   <plans>
   
+    <!-- Acabar partida -->
+    <plan name="acabarPartida_plan">
+      <body class="AcabarPartidaPlan" />
+      <trigger>
+        <goal ref="acabarPartida"></goal>
+      </trigger>
+    </plan>
+
     <!-- Abrir una puerta -->
     <plan name="abrirPuerta_plan">
       <body class="AbrirPuertaPlan" />
@@ -203,11 +229,11 @@
         <messageevent ref="Request_Cerrar_Puerta" />
       </trigger>
     </plan>
-    
+  
     <!-- Colocar PDI -->
     <plan name="ColocarPuntosInteres">
         <body class="ColocarPuntosInteresPlan" />
-        <trigger>	
+        <trigger>
           <goal ref="colocarPDIMeta"/>
         </trigger>
     </plan>
@@ -354,6 +380,19 @@
 
   <!-- EVENTOS -->
   <events>
+
+    <!-- Acabar Partida -->
+    <messageevent name="Inform_Partida_Acabada" direction="send" type="fipa">
+      <parameter name="performative" class="String" direction="fixed">
+        <value>SFipa.INFORM</value>
+      </parameter>
+      <parameter name="language" class="String" direction="fixed">
+        <value>SFipa.NUGGETS_XML</value>
+      </parameter>
+      <parameter name="content-class" class="Class" direction="fixed">
+        <value>ResultadoPartida.class</value>
+      </parameter>
+    </messageevent>
 
     <!-- Abrir puerta -->
     <messageevent name="Request_Abrir_Puerta" direction="receive" type="fipa">
