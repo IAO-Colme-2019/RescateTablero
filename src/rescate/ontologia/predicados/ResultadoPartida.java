@@ -4,7 +4,8 @@ public class ResultadoPartida extends Predicado {
 
   private int resultado;
 
-  public ResultadoPartida() {
+  public ResultadoPartida(){
+      
   }
 
   public void setResultado(int resultado) {

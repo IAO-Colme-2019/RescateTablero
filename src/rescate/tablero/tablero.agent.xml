@@ -78,7 +78,7 @@
 
     <!-- Fin de partida -->
     <belief name="finPartida" class="boolean">
-      <fact>false</fact>
+      <fact>true</fact>
     </belief>
 
 	  <!-- Ha terminado una ronda de turnos -->
@@ -118,9 +118,21 @@
       <concrete ref="dfcap.df_register" />
     </achievegoalref>
 
+    <!-- Objetivo finalizar partida -->
+    <performgoal name="acabarPartida" retrydelay="30000" exclude="when_succeeded" >
+      <creationcondition>
+        <!-- Que  -->
+        $beliefbase.finPartida &amp;&amp;
+        (($beliefbase.victimas &gt; 3) &#124;&#124;
+        ($beliefbase.salvados &gt; 6) &#124;&#124;
+        ($beliefbase.cubosDanno &lt; 1))
+      </creationcondition>
+    </performgoal>
+
     <!-- Colocar PDI -->
     <performgoal name="colocarPDIMeta" retry="true" retrydelay="3000" exclude="never">
         <contextcondition>
+          $beliefbase.finPartida &amp;&amp;
           (($beliefbase.finTurno) &amp;&amp;
           (($beliefbase.PDITablero) &lt; 3))
         </contextcondition>
@@ -130,6 +142,7 @@
 		<performgoal name="propagarFuegoMeta" retry="true" retrydelay="3000" exclude="never">
 			<creationcondition>
 				<!-- Que se active cuando tenga que activarse-->
+        $beliefbase.finPartida &amp;&amp;
 				$beliefbase.propagarFuego == true
 			</creationcondition>
 		</performgoal>
@@ -138,6 +151,7 @@
 		<performgoal name="cambiarTurnoMeta" retry="true" retrydelay="3000" exclude="never">
 			<creationcondition>
 				<!-- Que se active cuando tenga que activarse-->
+        $beliefbase.finPartida &amp;&amp;
 				$beliefbase.siguienteTurno == true
 			</creationcondition>
 		</performgoal>
@@ -146,14 +160,16 @@
 		<performgoal name="empezarMeta1" retry="true" retrydelay="30000" exclude="when_succeeded">
 			<creationcondition>
 				<!-- Que se active cuando empezar sea true y que el número de jugadores sea como minimo 2 -->
+        $beliefbase.finPartida &amp;&amp;
 				$beliefbase.tiempo-$beliefbase.tiempoInicio &gt; 300 &amp;&amp; $beliefbase.empezar &amp;&amp; $beliefbase.numJugadores &gt; 1
 			</creationcondition>
 		</performgoal>
 
     <!-- Objetivo para empezar la partida -->
-		<performgoal name="empezarMeta2" exclude="when_succeeded">
+		<performgoal name="empezarMeta2" retrydelay="10000" exclude="when_succeeded">
 			<creationcondition>
 				<!-- Que se active cuando empezar sea true y que el número de jugadores sea 6 -->
+        $beliefbase.finPartida &amp;&amp;
 				$beliefbase.empezar &amp;&amp; $beliefbase.numJugadores == 6
 			</creationcondition>
 		</performgoal>

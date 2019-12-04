@@ -35,6 +35,7 @@ public class AcabarPartidaPlan extends Plan {
     }
 
     sendMessage(respuesta);
+    getBeliefbase().getBelief("finPartida").setFact(false);
   }
 
 }
