@@ -119,6 +119,8 @@ public class ColocarPuntosInteresPlan extends Plan {
     // Una vez colocado el nuevo PDI, se actualizan las creencias
 		getBeliefbase().getBelief("PDITablero").setFact(PDITablero + 1);
     getBeliefbase().getBelief("tablero").setFact(t);
+    getBeliefbase().getBelief("finTurno").setFact(false);
+    getBeliefbase().getBelief("siguienteTurno").setFact(true);
 
     /*
     // Casillas en la habitación

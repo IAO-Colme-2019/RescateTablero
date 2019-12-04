@@ -115,6 +115,8 @@ public class PropagarFuegoPlan extends Plan {
     
     // Guardar tablero
     getBeliefbase().getBelief("tablero").setFact(t);
+    getBeliefbase().getBelief("propagarFuego").setFact(false);
+    getBeliefbase().getBelief("finTurno").setFact(true);
 
   }
 

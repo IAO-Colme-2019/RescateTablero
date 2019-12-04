@@ -1,7 +1,5 @@
 package rescate.tablero.planes;
 
-import java.util.*;
-
 import jadex.adapter.fipa.*;
 import jadex.runtime.IMessageEvent;
 import jadex.runtime.Plan;
@@ -39,7 +37,7 @@ class MandoPlan extends Plan {
     if(jugadorJefe.getHabitacion()==jugadorEsclavo.getHabitacion() 
       || (accion.getAccion() == DarOrden.Mandato.ABRIR && conexion == Casilla.Conexion.PUERTA_CERRADA)
       || (accion.getAccion() == DarOrden.Mandato.CERRAR && conexion == Casilla.Conexion.PUERTA_ABIERTA)
-      || (accion.getAccion() == DarOrden.Mandato.MOVER && !MoverJugadorPlan.hayObstaculo(conexion))){
+      || (accion.getAccion() == DarOrden.Mandato.MOVER && !DesplazarPlan.hayObstaculo(conexion))){
 
         boolean accionRealizada = false;
         int puntosAccion = 0;
@@ -96,10 +94,10 @@ class MandoPlan extends Plan {
           puntosAccion = 1;
         
         }
-        else if ( accion.getAccion() == DarOrden.Mandato.MOVER && jugadorJefe.getPuntosAccion() + ((jugadorEsclavo.getRol() != Jugador.Rol.ESPUMA_IGNIFUGA) ? jugadorJefe.getPuntosAccionMando() : 1)  > MoverJugadorPlan.puntosAccionNecesarios(colindante, jugadorEsclavo)){
+        else if ( accion.getAccion() == DarOrden.Mandato.MOVER && jugadorJefe.getPuntosAccion() + ((jugadorEsclavo.getRol() != Jugador.Rol.ESPUMA_IGNIFUGA) ? jugadorJefe.getPuntosAccionMando() : 1)  > DesplazarPlan.puntosAccionNecesarios(colindante, jugadorEsclavo)){
             jugadorEsclavo.setPosicion(colindante.getPosicion());
             accionRealizada = true;
-            puntosAccion = MoverJugadorPlan.puntosAccionNecesarios(colindante, jugadorEsclavo);
+            puntosAccion = DesplazarPlan.puntosAccionNecesarios(colindante, jugadorEsclavo);
         }
 
         if (accionRealizada) {
@@ -114,13 +112,13 @@ class MandoPlan extends Plan {
           // Se actualiza en la base de creencias el hecho tablero
           getBeliefbase().getBelief("tablero").setFact(t);
           // Se informa al jugador de que la acción ha sido llevada a cabo
-          IMessageEvent respuesta = createMessageEvent("Inform_Orden_Recibida");
-          respuesta.setContent(new OrdenRecibida(puntosAccion));
+          IMessageEvent respuesta = createMessageEvent("Inform_Orden_Completada");
+          respuesta.setContent(new OrdenCompletada(puntosAccion));
           respuesta.getParameterSet(SFipa.RECEIVERS).addValue(idJugador);
           sendMessage(respuesta);
         }
         else {
-          System.out.println("[FALLO] El jefe no dispone de PA necesarios para realizar la accion");
+          System.out.println("[RECHAZAR] El jefe no dispone de PA necesarios para realizar la accion");
           // Se rechaza la petición de acción del jugador
           IMessageEvent respuesta = createMessageEvent("Refuse_Dar_Orden");
           respuesta.setContent(accion);

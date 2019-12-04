@@ -28,9 +28,6 @@ class ConducirCamionPlan extends Plan {
     // Se encuentra en la lista de jugadores del tablero el jugador con id igual al de la petición
     Jugador jugador = t.getJugador(idJugador);
 
-    // Casilla en la que está el jugador
-    Casilla c = t.getMapa()[jugador.getPosicion()[1]][jugador.getPosicion()[0]];
-
     // El jugador está subido al camión
     if (jugador.subidoCamion()) {
       // El jugador tiene PA suficientes
