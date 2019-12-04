@@ -13,6 +13,8 @@ public class PropagarFuegoPlan extends Plan {
 
   @Override
   public void body() {
+    
+    System.out.println("[PLAN] El tablero propaga el incendio");
 
     // Tablero
     Tablero t = (Tablero) getBeliefbase().getBelief("tablero").getFact();

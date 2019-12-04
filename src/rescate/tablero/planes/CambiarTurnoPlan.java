@@ -12,8 +12,7 @@ class CambiarTurnoPlan extends Plan {
 	@Override
 	public void body() {
 
-    System.out.println("[PLAN] El tablero recibe petición de cambiar turno");
-    
+    System.out.println("[PLAN] El tablero cambia de turno");
     
     // Tablero
     Tablero t = (Tablero) getBeliefbase().getBelief("tablero").getFact();
@@ -47,7 +46,6 @@ class CambiarTurnoPlan extends Plan {
 
     // Con esto evitamos que se pueda quedar a true porque haya más de 3 PDIs y así no puede poner PDIs a mitad de turno
     getBeliefbase().getBelief("finTurno").setFact(false);
-
 
     System.out.println("[INFO] Turno cambiado, ahora juega el jugador con id " + indiceProximoJugador);
 

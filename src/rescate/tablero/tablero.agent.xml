@@ -146,7 +146,7 @@
     <!-- Objetivo para cambiar el turno -->		
 		<performgoal name="empezarMeta2" exclude="when_succeeded">
 			<creationcondition>
-				<!-- Que se active cuando empezar sea true y que el número de jugadores sea como minimo 2 -->
+				<!-- Que se active cuando empezar sea true y que el número de jugadores sea 6 -->
 				$beliefbase.empezar &amp;&amp; $beliefbase.numJugadores == 6
 			</creationcondition>
 		</performgoal>
@@ -331,8 +331,7 @@
     <plan name="propagarFuego_plan">
       <body class="PropagarFuegoPlan" />
       <trigger>
-        <!-- condicion de inicio -->
-        <!-- Esto debería hacer que se active cada vez que termina el plan de cambiar el turno -->
+        <!-- Se activa cada vez que termina el plan de cambiar el turno -->
         <goal ref="propagarFuegoMeta"/>
       </trigger>
     </plan>

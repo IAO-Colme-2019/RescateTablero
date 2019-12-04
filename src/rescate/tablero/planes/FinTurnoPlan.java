@@ -8,12 +8,12 @@ import rescate.ontologia.acciones.*;
 import rescate.ontologia.conceptos.*;
 import rescate.ontologia.predicados.*;
 
-class CambiarTurnoPlan extends Plan {
+class FinTurnoPlan extends Plan {
 
 	@Override
 	public void body() {
 
-    System.out.println("[PLAN] El tablero recibe petición de cambiar turno");
+    System.out.println("[PLAN] El tablero recibe petición de finalizar un turno");
     
     // Petición
     IMessageEvent peticion = (IMessageEvent) getInitialEvent();
@@ -38,7 +38,6 @@ class CambiarTurnoPlan extends Plan {
       sendMessage(respuesta);
       return;
     }
-    
     
     System.out.println("[INFO] Siguiente turno");
     
